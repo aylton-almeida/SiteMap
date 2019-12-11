@@ -13,4 +13,8 @@
         <item name="android:colorControlNormal">@android:color/white</item>
     </style>
 
+    <style name="SplashTheme" parent="BaseTheme">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
 </resources>

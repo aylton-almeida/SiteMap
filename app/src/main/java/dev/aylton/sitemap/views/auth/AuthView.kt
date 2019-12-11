@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_auth.*
+import org.jetbrains.anko.info
 
 class AuthView : BaseView() {
 

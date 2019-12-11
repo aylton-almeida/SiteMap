@@ -29,7 +29,7 @@ class SiteListView : BaseView() {
         init(toolbar, false)
 
         button.setOnClickListener{
-            findNavController().navigate(R.id.action_siteListView_to_siteView)
+            presenter.auth.signOut()
         }
     }
 

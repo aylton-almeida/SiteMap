@@ -12,7 +12,10 @@ import kotlinx.android.synthetic.main.fragment_auth.*
 
 class AuthPresenter(view: BaseView) : BasePresenter(view) {
 
-    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    init {
+        if (hasCurrentUser())
+            view.findNavController().navigate(R.id.action_signUp_dest_to_siteList_dest)
+    }
 
     fun doSignIn(email: String, password: String) {
         hideKeyboard(view?.activity)
