@@ -33,6 +33,7 @@
                     app:srcCompat="@drawable/icon_site_map" />
 
                 <TextView
+                    android:id="@+id/textName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -43,6 +44,20 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminateOnly="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textName"
+                    android:layout_marginTop="16dp"
+                    android:visibility="invisible"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -72,6 +87,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewSign">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -92,6 +108,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textLayoutEmail">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"

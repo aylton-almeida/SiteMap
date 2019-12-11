@@ -1,8 +1,12 @@
 package dev.aylton.sitemap.views
 
+import android.graphics.Color
+import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import dev.aylton.sitemap.models.SiteModel
 import org.jetbrains.anko.AnkoLogger
 
@@ -28,8 +32,23 @@ abstract class BaseView: Fragment(), AnkoLogger{
         super.onDestroy()
     }
 
+    private fun Snackbar.withColor(color: Int): Snackbar{
+        this.view.setBackgroundColor(color)
+        return this
+    }
+
+    fun showSnackbar(text: String, color: Int){
+        Snackbar.make(view!!, text, Snackbar.LENGTH_SHORT)
+            .withColor(Color.RED).show()
+    }
+
+    fun showProgress(progressBar: ProgressBar?) {
+        progressBar?.visibility = View.VISIBLE
+    }
+    fun hideProgress(progressBar: ProgressBar?) {
+        progressBar?.visibility = View.INVISIBLE
+    }
+
     open fun showSite(site: SiteModel) {}
     open fun showPlacemarks(site: SiteModel) {}
-    open fun showProgress() {}
-    open fun hideProgress() {}
 }

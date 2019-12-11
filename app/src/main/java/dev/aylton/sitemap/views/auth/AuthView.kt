@@ -1,19 +1,20 @@
 package dev.aylton.sitemap.views.auth
 
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.snackbar.Snackbar
 
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.views.BaseView
+import kotlinx.android.synthetic.main.fragment_auth.*
 
-/**
- * A simple [Fragment] subclass.
- */
 class AuthView : BaseView() {
+
+    private lateinit var presenter: AuthPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +27,30 @@ class AuthView : BaseView() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initPresenter(AuthPresenter(this)) as AuthPresenter
+        presenter = initPresenter(AuthPresenter(this)) as AuthPresenter
+
+        btnSignUp.setOnClickListener {
+            showProgress(progressBar)
+            val email = inputEmail.text.toString()
+            val password = inputPass.text.toString()
+            if (email == "" || password == "") {
+                showSnackbar("Please type an email and password", Color.RED)
+                hideProgress(progressBar)
+            } else {
+                presenter.doSignUp(email, password)
+            }
+        }
+
+        btnSignIn.setOnClickListener {
+            showProgress(progressBar)
+            val email = inputEmail.text.toString()
+            val password = inputPass.text.toString()
+            if (email == "" || password == "") {
+                showSnackbar("Please type an email and password", Color.RED)
+                hideProgress(progressBar)
+            } else {
+                presenter.doSignIn(email, password)
+            }
+        }
     }
 }
