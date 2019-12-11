@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/start_dest"
-        android:name="dev.aylton.sitemap.views.SplashFragment"
+        android:name="dev.aylton.sitemap.views.sitelist.SiteListView"
         android:label="fragment_start"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_site_list" >
         <action
             android:id="@+id/action_startFragment_to_secondFragment"
             app:destination="@id/second_dest"
@@ -18,16 +18,16 @@
     </fragment>
     <fragment
         android:id="@+id/second_dest"
-        android:name="dev.aylton.sitemap.views.SecondFragment"
+        android:name="dev.aylton.sitemap.views.editsite.EditSiteView"
         android:label="fragment_second"
-        tools:layout="@layout/fragment_second" >
+        tools:layout="@layout/fragment_edit_site" >
         <action
             android:id="@+id/action_secondFragment_to_thirdFragment"
             app:destination="@id/third_dest" />
     </fragment>
     <fragment
         android:id="@+id/third_dest"
-        android:name="dev.aylton.sitemap.views.ThirdFragment"
+        android:name="dev.aylton.sitemap.views.site.SiteView"
         android:label="fragment_third"
-        tools:layout="@layout/fragment_third" />
+        tools:layout="@layout/fragment_site" />
 </navigation>
