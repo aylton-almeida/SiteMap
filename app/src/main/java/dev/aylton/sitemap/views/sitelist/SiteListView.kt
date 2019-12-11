@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.fragment_site_list.*
 
 class SiteListView : BaseView() {
 
+    private lateinit var presenter: SiteListPresenter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -22,10 +24,13 @@ class SiteListView : BaseView() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        init(toolbar, true)
+        presenter = initPresenter(SiteListPresenter(this)) as SiteListPresenter
+
+        init(toolbar, false)
 
         button.setOnClickListener{
-            findNavController().navigate(R.id.second_dest)
+            findNavController().navigate(R.id.action_siteListView_to_siteView)
         }
     }
+
 }

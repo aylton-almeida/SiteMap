@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dev.aylton.sitemap.R
+import dev.aylton.sitemap.views.BaseView
+import kotlinx.android.synthetic.main.fragment_site.*
 
-/**
- * A simple [Fragment] subclass.
- */
-class SiteView : Fragment() {
+class SiteView : BaseView() {
+
+    private lateinit var presenter: SitePresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,6 +20,14 @@ class SiteView : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_site, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        presenter = initPresenter(SitePresenter(this)) as SitePresenter
+
+        init(toolbar, true)
     }
 
 

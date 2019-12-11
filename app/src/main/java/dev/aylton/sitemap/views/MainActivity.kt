@@ -14,4 +14,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         info("Started App")
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 }

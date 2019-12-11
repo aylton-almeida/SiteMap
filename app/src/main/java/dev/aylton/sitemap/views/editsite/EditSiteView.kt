@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dev.aylton.sitemap.R
+import dev.aylton.sitemap.views.BaseView
+import kotlinx.android.synthetic.main.fragment_edit_site.*
 
-/**
- * A simple [Fragment] subclass.
- */
-class EditSiteView : Fragment() {
+class EditSiteView : BaseView() {
+
+    private lateinit var presenter: EditSitePresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,5 +22,12 @@ class EditSiteView : Fragment() {
         return inflater.inflate(R.layout.fragment_edit_site, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        presenter = initPresenter(EditSitePresenter(this)) as EditSitePresenter
+
+        init(toolbar, true)
+    }
 
 }

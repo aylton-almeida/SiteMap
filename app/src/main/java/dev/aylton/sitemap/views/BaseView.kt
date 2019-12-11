@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import dev.aylton.sitemap.models.SiteModel
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 
 abstract class BaseView: Fragment(), AnkoLogger{
@@ -14,9 +13,9 @@ abstract class BaseView: Fragment(), AnkoLogger{
     fun init(toolbar: Toolbar, upEnabled: Boolean){
         val act = activity as AppCompatActivity
         toolbar.title = act.title
-        info { toolbar.title }
         act.setSupportActionBar(toolbar)
         act.supportActionBar?.setDisplayHomeAsUpEnabled(upEnabled)
+        act.supportActionBar?.setDisplayShowHomeEnabled(upEnabled)
     }
 
     fun initPresenter(presenter: BasePresenter): BasePresenter{
