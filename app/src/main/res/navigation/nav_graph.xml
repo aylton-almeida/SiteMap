@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/siteList_dest">
+    app:startDestination="@id/auth_dest">
     <fragment
         android:id="@+id/siteList_dest"
         android:name="dev.aylton.sitemap.views.sitelist.SiteListView"
@@ -33,16 +33,24 @@
         <action
             android:id="@+id/action_siteView_to_editSiteView"
             app:destination="@id/editSite_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
             app:launchSingleTop="true"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@+id/siteList_dest"
             app:popUpToInclusive="false" />
     </fragment>
     <fragment
-        android:id="@+id/signUp_dest"
-        android:label="SignUp/SignIn" >
+        android:id="@+id/auth_dest"
+        android:name="dev.aylton.sitemap.views.auth.AuthView"
+        android:label="fragment_auth"
+        tools:layout="@layout/fragment_auth">
         <action
             android:id="@+id/action_signUp_dest_to_siteList_dest"
             app:destination="@id/siteList_dest"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
             app:launchSingleTop="true"
             app:popUpTo="@+id/nav_graph"
             app:popUpToInclusive="true" />
