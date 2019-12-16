@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dev.aylton.sitemap.R
+import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_site_list.*
+import org.jetbrains.anko.info
 
-class SiteListView : BaseView() {
+class SiteListView : BaseView(), SiteListener {
 
     private lateinit var presenter: SiteListPresenter
 
@@ -27,10 +30,14 @@ class SiteListView : BaseView() {
         presenter = initPresenter(SiteListPresenter(this)) as SiteListPresenter
 
         init(toolbar, false)
+    }
 
-        button.setOnClickListener{
-            presenter.auth.signOut()
-        }
+    override fun showSites(sites: List<SiteModel>) {
+        recyclerView.adapter = SiteAdapter(sites, this)
+    }
+
+    override fun onSiteClick(site: SiteModel) {
+        presenter.navigateSiteView(site)
     }
 
 }

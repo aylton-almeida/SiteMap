@@ -50,5 +50,5 @@ abstract class BaseView: Fragment(), AnkoLogger{
     }
 
     open fun showSite(site: SiteModel) {}
-    open fun showPlacemarks(site: SiteModel) {}
+    open fun showSites(sites: List<SiteModel>) {}
 }

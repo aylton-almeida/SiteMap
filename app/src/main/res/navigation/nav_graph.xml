@@ -12,13 +12,16 @@
         <action
             android:id="@+id/action_siteListView_to_siteView"
             app:destination="@id/site_dest"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
             app:launchSingleTop="true"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"
             app:popUpTo="@+id/siteList_dest"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_siteList_dest_to_editSite_dest"
+            app:destination="@id/editSite_dest" />
     </fragment>
     <fragment
         android:id="@+id/editSite_dest"
@@ -40,6 +43,9 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@+id/siteList_dest"
             app:popUpToInclusive="false" />
+        <argument
+            android:name="site"
+            app:argType="dev.aylton.sitemap.models.SiteModel" />
     </fragment>
     <fragment
         android:id="@+id/auth_dest"
