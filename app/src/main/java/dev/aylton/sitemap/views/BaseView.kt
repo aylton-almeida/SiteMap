@@ -14,10 +14,11 @@ import org.jetbrains.anko.AnkoLogger
 abstract class BaseView: Fragment(), AnkoLogger{
     private var basePresenter: BasePresenter? = null
 
-    fun init(toolbar: Toolbar, upEnabled: Boolean){
+    fun init(toolbar: Toolbar, upEnabled: Boolean, optionsMenu: Boolean){
         val act = activity as AppCompatActivity
         toolbar.title = act.title
         act.setSupportActionBar(toolbar)
+        setHasOptionsMenu(optionsMenu)
         act.supportActionBar?.setDisplayHomeAsUpEnabled(upEnabled)
         act.supportActionBar?.setDisplayShowHomeEnabled(upEnabled)
     }
@@ -39,7 +40,7 @@ abstract class BaseView: Fragment(), AnkoLogger{
 
     fun showSnackbar(text: String, color: Int){
         Snackbar.make(view!!, text, Snackbar.LENGTH_SHORT)
-            .withColor(Color.RED).show()
+            .withColor(color).show()
     }
 
     fun showProgress(progressBar: ProgressBar?) {

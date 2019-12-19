@@ -22,4 +22,8 @@ class SiteListPresenter(view: BaseView) : BasePresenter(view) {
     fun navigateSiteView(site: SiteModel){
         view?.findNavController()?.navigate(R.id.action_siteListView_to_siteView, bundleOf("site" to site))
     }
+
+    fun navigateUserView(){
+
+    }
 }

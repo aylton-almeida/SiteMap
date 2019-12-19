@@ -1,9 +1,7 @@
 package dev.aylton.sitemap.views.sitelist
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dev.aylton.sitemap.R
@@ -29,7 +27,7 @@ class SiteListView : BaseView(), SiteListener {
 
         presenter = initPresenter(SiteListPresenter(this)) as SiteListPresenter
 
-        init(toolbar, false)
+        init(toolbar, upEnabled = false, optionsMenu = true)
     }
 
     override fun showSites(sites: List<SiteModel>) {
@@ -38,6 +36,18 @@ class SiteListView : BaseView(), SiteListener {
 
     override fun onSiteClick(site: SiteModel) {
         presenter.navigateSiteView(site)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_list, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_account -> presenter.navigateUserView()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
