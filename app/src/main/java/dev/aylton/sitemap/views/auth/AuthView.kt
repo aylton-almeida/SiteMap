@@ -33,11 +33,13 @@ class AuthView : BaseView() {
 
         btnSignUp.setOnClickListener {
             showProgress(progressBar)
+            presenter.toggleEnable(false)
             val email = inputEmail.text.toString()
             val password = inputPass.text.toString()
             if (email == "" || password == "") {
                 showSnackbar("Please type an email and password", Color.RED)
                 hideProgress(progressBar)
+                presenter.toggleEnable(true)
             } else {
                 presenter.doSignUp(email, password)
             }
@@ -45,11 +47,13 @@ class AuthView : BaseView() {
 
         btnSignIn.setOnClickListener {
             showProgress(progressBar)
+            presenter.toggleEnable(false)
             val email = inputEmail.text.toString()
             val password = inputPass.text.toString()
             if (email == "" || password == "") {
                 showSnackbar("Please type an email and password", Color.RED)
                 hideProgress(progressBar)
+                presenter.toggleEnable(true)
             } else {
                 presenter.doSignIn(email, password)
             }

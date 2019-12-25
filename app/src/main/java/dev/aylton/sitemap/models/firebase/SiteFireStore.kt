@@ -1,7 +1,6 @@
 package dev.aylton.sitemap.models.firebase
 
 import android.content.Context
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -10,7 +9,6 @@ import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.models.SiteStore
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
-import kotlin.math.log
 
 
 class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
@@ -18,7 +16,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     val sites = ArrayList<SiteModel>()
     lateinit var userId: String
     lateinit var db: FirebaseFirestore
-    lateinit var st : StorageReference
+    lateinit var st: StorageReference
 
     override fun findAll(): List<SiteModel> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -27,10 +25,10 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     override fun create(site: SiteModel) {
         info { "Data started" }
         db.collection("sites").document().set(site)
-            .addOnSuccessListener{
+            .addOnSuccessListener {
                 info { "Data added" }
             }
-            .addOnFailureListener{
+            .addOnFailureListener {
                 info { "Data failed: $it" }
             }
     }
@@ -51,23 +49,22 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun fetchSites(sitesReady: (docs: ArrayList<SiteModel>) -> Unit){
+    fun fetchSites(callback: (docs: ArrayList<SiteModel>) -> Unit) {
         userId = FirebaseAuth.getInstance().currentUser!!.uid
         db = FirebaseFirestore.getInstance()
         st = FirebaseStorage.getInstance().reference
 
-        db.collection("sites").addSnapshotListener{snapshot, e ->
+        db.collection("sites").addSnapshotListener { snapshot, e ->
             sites.clear()
             if (e != null) {
                 info("Listen Failed: $e")
                 return@addSnapshotListener
             }
-
             if (snapshot != null) {
                 for (doc in snapshot.documents)
                     sites.add(doc.toObject(SiteModel::class.java)!!)
-                sitesReady(sites)
-            }else{
+                callback(sites)
+            } else {
                 info("Current data: null")
             }
         }

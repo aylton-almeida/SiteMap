@@ -12,4 +12,5 @@
     <string name="site_list_imagem">Image site</string>
     <string name="account_item">Account</string>
     <string name="settings_item">Settings</string>
+    <string name="sign_out">Sign out</string>
 </resources>

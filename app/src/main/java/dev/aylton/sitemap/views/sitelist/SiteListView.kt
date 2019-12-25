@@ -2,13 +2,10 @@ package dev.aylton.sitemap.views.sitelist
 
 import android.os.Bundle
 import android.view.*
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_site_list.*
-import org.jetbrains.anko.info
 
 class SiteListView : BaseView(), SiteListener {
 
@@ -45,7 +42,7 @@ class SiteListView : BaseView(), SiteListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_account -> presenter.navigateUserView()
+            R.id.item_account -> presenter.navigateAccountView()
         }
         return super.onOptionsItemSelected(item)
     }

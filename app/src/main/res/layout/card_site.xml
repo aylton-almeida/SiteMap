@@ -28,8 +28,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="textStart"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="24sp"
+            android:textFontWeight="700"
+            android:layout_marginStart="50dp"
             app:layout_constraintStart_toEndOf="@+id/imageIcon"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,9 +38,9 @@
             android:id="@+id/siteDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:textSize="18sp"
             android:textAlignment="textStart"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="50dp"
             app:layout_constraintStart_toEndOf="@id/imageIcon"
             app:layout_constraintTop_toBottomOf="@id/siteName" />
 

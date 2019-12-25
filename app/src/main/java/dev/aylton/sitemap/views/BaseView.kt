@@ -11,19 +11,22 @@ import dev.aylton.sitemap.models.SiteModel
 import org.jetbrains.anko.AnkoLogger
 
 
-abstract class BaseView: Fragment(), AnkoLogger{
+abstract class BaseView : Fragment(), AnkoLogger {
     private var basePresenter: BasePresenter? = null
 
-    fun init(toolbar: Toolbar, upEnabled: Boolean, optionsMenu: Boolean){
+    fun init(toolbar: Toolbar, upEnabled: Boolean, optionsMenu: Boolean, title: String = "") {
         val act = activity as AppCompatActivity
-        toolbar.title = act.title
+        if (title == "")
+            toolbar.title = act.title
+        else
+            toolbar.title = title
         act.setSupportActionBar(toolbar)
         setHasOptionsMenu(optionsMenu)
         act.supportActionBar?.setDisplayHomeAsUpEnabled(upEnabled)
         act.supportActionBar?.setDisplayShowHomeEnabled(upEnabled)
     }
 
-    fun initPresenter(presenter: BasePresenter): BasePresenter{
+    fun initPresenter(presenter: BasePresenter): BasePresenter {
         basePresenter = presenter
         return presenter
     }
@@ -33,12 +36,12 @@ abstract class BaseView: Fragment(), AnkoLogger{
         super.onDestroy()
     }
 
-    private fun Snackbar.withColor(color: Int): Snackbar{
+    private fun Snackbar.withColor(color: Int): Snackbar {
         this.view.setBackgroundColor(color)
         return this
     }
 
-    fun showSnackbar(text: String, color: Int){
+    fun showSnackbar(text: String, color: Int) {
         Snackbar.make(view!!, text, Snackbar.LENGTH_SHORT)
             .withColor(color).show()
     }
@@ -46,6 +49,7 @@ abstract class BaseView: Fragment(), AnkoLogger{
     fun showProgress(progressBar: ProgressBar?) {
         progressBar?.visibility = View.VISIBLE
     }
+
     fun hideProgress(progressBar: ProgressBar?) {
         progressBar?.visibility = View.INVISIBLE
     }

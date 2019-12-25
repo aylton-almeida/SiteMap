@@ -27,7 +27,7 @@ class SiteView : BaseView() {
 
         presenter = initPresenter(SitePresenter(this)) as SitePresenter
 
-        init(toolbar, upEnabled = true, optionsMenu = false)
+        init(toolbar, upEnabled = true, optionsMenu = false, title = "Details")
     }
 
 

@@ -27,6 +27,7 @@ class AuthPresenter(view: BaseView?) : BasePresenter(view) {
                 view?.findNavController()?.navigate(R.id.action_signUp_dest_to_siteList_dest)
             else
                 view?.showSnackbar(it.exception?.message!!, Color.RED)
+            toggleEnable(true)
             view?.hideProgress(view?.progressBar)
         }
     }
@@ -38,8 +39,16 @@ class AuthPresenter(view: BaseView?) : BasePresenter(view) {
                 view?.findNavController()?.navigate(R.id.action_signUp_dest_to_siteList_dest)
             else
                 view?.showSnackbar(it.exception?.message!!, Color.RED)
+            toggleEnable(true)
             view?.hideProgress(view?.progressBar)
         }
+    }
+
+    fun toggleEnable(isEnabled: Boolean){
+        view?.btnSignUp?.isEnabled = isEnabled
+        view?.btnSignIn?.isEnabled = isEnabled
+        view?.textLayoutEmail?.isEnabled = isEnabled
+        view?.textLayoutPass?.isEnabled = isEnabled
     }
 
 }
