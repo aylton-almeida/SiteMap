@@ -1,8 +1,6 @@
 package dev.aylton.sitemap.views.sitelist
 
-import android.os.Bundle
 import androidx.core.os.bundleOf
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel

@@ -10,5 +10,6 @@
     <string name="signup">SignUp</string>
     <string name="signin">Sign In</string>
     <string name="site_list_imagem">Image site</string>
-    <string name="account_item">account</string>
+    <string name="account_item">Account</string>
+    <string name="settings_item">Settings</string>
 </resources>

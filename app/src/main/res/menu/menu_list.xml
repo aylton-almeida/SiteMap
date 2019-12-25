@@ -4,7 +4,12 @@
 
     <item
         android:id="@+id/item_account"
-        android:icon="@drawable/ic_person"
         android:title="@string/account_item"
-        app:showAsAction="always"/>
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/item_settings"
+        android:title="@string/settings_item"
+        app:showAsAction="never"
+        />
 </menu>
