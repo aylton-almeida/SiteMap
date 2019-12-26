@@ -24,4 +24,8 @@ class SiteListPresenter(view: BaseView) : BasePresenter(view) {
     fun navigateAccountView(){
         view?.findNavController()?.navigate(R.id.action_siteList_dest_to_account_dest)
     }
+
+    fun setIsVisited(site: SiteModel, isVisited: Boolean){
+        fireStore.setIsVisited(site, isVisited)
+    }
 }

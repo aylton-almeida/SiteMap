@@ -6,6 +6,7 @@ import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_site_list.*
+import org.jetbrains.anko.info
 
 class SiteListView : BaseView(), SiteListener {
 
@@ -25,6 +26,8 @@ class SiteListView : BaseView(), SiteListener {
         presenter = initPresenter(SiteListPresenter(this)) as SiteListPresenter
 
         init(toolbar, upEnabled = false, optionsMenu = true)
+
+
     }
 
     override fun showSites(sites: List<SiteModel>) {
@@ -33,6 +36,10 @@ class SiteListView : BaseView(), SiteListener {
 
     override fun onSiteClick(site: SiteModel) {
         presenter.navigateSiteView(site)
+    }
+
+    override fun onSiteChecked(site: SiteModel, isChecked: Boolean) {
+        presenter.setIsVisited(site, isChecked)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
