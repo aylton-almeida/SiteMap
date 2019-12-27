@@ -8,7 +8,7 @@
         android:id="@+id/siteList_dest"
         android:name="dev.aylton.sitemap.views.sitelist.SiteListView"
         android:label="fragment_site_list"
-        tools:layout="@layout/fragment_site_list">
+        tools:layout="@layout/fragment_tabs">
         <action
             android:id="@+id/action_siteListView_to_siteView"
             app:destination="@id/site_dest"
@@ -46,12 +46,12 @@
         <action
             android:id="@+id/action_siteView_to_editSiteView"
             app:destination="@id/editSite_dest"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
             app:launchSingleTop="true"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@+id/siteList_dest"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"
+            app:popUpTo="@+id/site_dest"
             app:popUpToInclusive="false" />
         <argument
             android:name="site"

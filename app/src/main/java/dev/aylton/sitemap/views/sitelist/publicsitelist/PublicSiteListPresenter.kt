@@ -1,4 +1,4 @@
-package dev.aylton.sitemap.views.sitelist
+package dev.aylton.sitemap.views.sitelist.publicsitelist
 
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
@@ -7,7 +7,7 @@ import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView
 
-class SiteListPresenter(view: BaseView) : BasePresenter(view) {
+class PublicSiteListPresenter(view: BaseView) : BasePresenter(view) {
 
     init {
         fireStore.fetchSites { docs: ArrayList<SiteModel> -> loadSites(docs) }

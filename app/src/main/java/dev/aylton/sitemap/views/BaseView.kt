@@ -1,6 +1,5 @@
 package dev.aylton.sitemap.views
 
-import android.graphics.Color
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity

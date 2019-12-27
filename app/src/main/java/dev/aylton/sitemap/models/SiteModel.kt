@@ -9,5 +9,6 @@ data class SiteModel(
     var name: String = "",
     var description: String = "",
     var image: String = "",
-    var isVisited: Boolean = false
+    var isVisited: Boolean = false,
+    var location: Map<String, Double> = mapOf("lat" to 0.0, "lng" to 0.0, "zoom" to 0.0)
 ) : Parcelable

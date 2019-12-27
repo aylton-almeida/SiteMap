@@ -73,6 +73,9 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                 for (doc in snapshot.documents) {
                     val newSite = doc.toObject(SiteModel::class.java)!!
                     newSite.id = doc.id
+                    info { doc.data }
+                    if (user.visitedSites.contains(newSite.id))
+                        newSite.isVisited = true
                     publicSites.add(newSite)
                 }
                 callback(publicSites)
