@@ -5,8 +5,17 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class SiteModel(
-    val id: Long = 0,
+    var id: String = "",
     var name: String = "",
     var description: String = "",
-    var image: String = ""
+    var image: String = "",
+    var isVisited: Boolean = false,
+    var location: Location = Location()
+) : Parcelable
+
+@Parcelize
+data class Location(
+    var lat: Double = 0.0,
+    var lng: Double = 0.0,
+    var zoom: Float = 0.0f
 ) : Parcelable

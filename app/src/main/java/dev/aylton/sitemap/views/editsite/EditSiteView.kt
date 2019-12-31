@@ -27,7 +27,7 @@ class EditSiteView : BaseView() {
 
         presenter = initPresenter(EditSitePresenter(this)) as EditSitePresenter
 
-        init(toolbar, true)
+        init(toolbar, upEnabled = true, optionsMenu = false)
     }
 
 }

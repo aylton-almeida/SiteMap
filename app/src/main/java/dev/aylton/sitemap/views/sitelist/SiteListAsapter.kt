@@ -12,11 +12,13 @@ import org.jetbrains.anko.AnkoLogger
 
 interface SiteListener {
     fun onSiteClick(site: SiteModel)
+
+    fun onSiteChecked(site: SiteModel, isChecked: Boolean)
 }
 
-class SiteAdapter(private var sites: List<SiteModel>,
-                                   private val listener: SiteListener
-) : RecyclerView.Adapter<SiteAdapter.ViewHolder>(), AnkoLogger {
+class SiteListAsapter(private var sites: List<SiteModel>,
+                      private val listener: SiteListener
+) : RecyclerView.Adapter<SiteListAsapter.ViewHolder>(), AnkoLogger {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -40,8 +42,10 @@ class SiteAdapter(private var sites: List<SiteModel>,
         fun bind(site: SiteModel, listener: SiteListener) {
             itemView.siteName.text = site.name
             itemView.siteDescription.text = site.description
+            itemView.checkbox.isChecked = site.isVisited
             Glide.with(itemView.context).load(site.image).into(itemView.imageIcon)
             itemView.setOnClickListener { listener.onSiteClick(site) }
+            itemView.checkbox.setOnClickListener { listener.onSiteChecked(site, itemView.checkbox.isChecked) }
         }
     }
 }

@@ -1,37 +1,36 @@
 package dev.aylton.sitemap.models.firebase
 
 import android.content.Context
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.models.SiteStore
+import dev.aylton.sitemap.models.UserModel
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
-import kotlin.math.log
 
 
 class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
 
-    val sites = ArrayList<SiteModel>()
-    lateinit var userId: String
-    lateinit var db: FirebaseFirestore
-    lateinit var st : StorageReference
+    private val publicSites = ArrayList<SiteModel>()
+    private var user = UserModel()
+    private lateinit var userId: String
+    private lateinit var db: FirebaseFirestore
+    private lateinit var st: StorageReference
 
     override fun findAll(): List<SiteModel> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun create(site: SiteModel) {
-        info { "Data started" }
         db.collection("sites").document().set(site)
-            .addOnSuccessListener{
-                info { "Data added" }
+            .addOnSuccessListener {
+                info { "Site added" }
             }
-            .addOnFailureListener{
-                info { "Data failed: $it" }
+            .addOnFailureListener {
+                info { "Site failed: $it" }
             }
     }
 
@@ -40,7 +39,13 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     }
 
     override fun delete(site: SiteModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        db.collection("sites").document(site.id).delete()
+            .addOnSuccessListener {
+                info { "Site added" }
+            }
+            .addOnFailureListener {
+                info { it }
+            }
     }
 
     override fun findById(id: Long): SiteModel? {
@@ -51,25 +56,54 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun fetchSites(sitesReady: (docs: ArrayList<SiteModel>) -> Unit){
+    fun setIsVisited(site: SiteModel, isVisited: Boolean = true) {
+        if (isVisited)
+            user.visitedSites.add(site.id)
+        else
+            user.visitedSites.remove(site.id)
+        db.collection("users").document(userId).set(user)
+    }
+
+    fun fetchSites(callback: (docs: ArrayList<SiteModel>) -> Unit) {
         userId = FirebaseAuth.getInstance().currentUser!!.uid
         db = FirebaseFirestore.getInstance()
         st = FirebaseStorage.getInstance().reference
 
-        db.collection("sites").addSnapshotListener{snapshot, e ->
-            sites.clear()
+        db.collection("sites").addSnapshotListener { snapshot, e ->
+            publicSites.clear()
             if (e != null) {
                 info("Listen Failed: $e")
                 return@addSnapshotListener
             }
-
             if (snapshot != null) {
-                for (doc in snapshot.documents)
-                    sites.add(doc.toObject(SiteModel::class.java)!!)
-                sitesReady(sites)
-            }else{
+                info { snapshot.documents }
+                for (doc in snapshot.documents) {
+                    val newSite = doc.toObject(SiteModel::class.java)!!
+                    newSite.id = doc.id
+                    if (user.visitedSites.contains(newSite.id))
+                        newSite.isVisited = true
+                    publicSites.add(newSite)
+                }
+                callback(publicSites)
+            } else {
                 info("Current data: null")
             }
+        }
+
+        db.collection("users").document(userId).addSnapshotListener { snapshot, e ->
+            user = UserModel()
+            if (e != null) {
+                info { "Listen failed $e" }
+                return@addSnapshotListener
+            }
+            if (snapshot != null) {
+                if (snapshot.data != null)
+                    user = snapshot.toObject(UserModel::class.java)!!
+                for (site in publicSites)
+                    site.isVisited = user.visitedSites.contains(site.id)
+                callback(publicSites)
+            } else
+                info { "Current data: null" }
         }
     }
 }
