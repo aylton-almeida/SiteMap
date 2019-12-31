@@ -33,7 +33,7 @@ class PublicSiteListView : BaseView(),
     }
 
     override fun showSites(sites: List<SiteModel>) {
-        recyclerView.adapter =
+        recyclerView?.adapter =
             SiteListAsapter(sites, this)
     }
 
@@ -43,18 +43,6 @@ class PublicSiteListView : BaseView(),
 
     override fun onSiteChecked(site: SiteModel, isChecked: Boolean) {
         presenter.setIsVisited(site, isChecked)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_list, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_account -> presenter.navigateAccountView()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 }

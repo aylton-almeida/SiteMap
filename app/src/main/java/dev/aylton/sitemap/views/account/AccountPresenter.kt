@@ -8,10 +8,6 @@ import dev.aylton.sitemap.views.BaseView
 
 class AccountPresenter(view: BaseView) : BasePresenter(view) {
 
-    private fun loadSite(site: SiteModel){
-        TODO("Implement")
-    }
-
     fun doSignOut(){
         auth.signOut()
         view?.findNavController()?.navigate(R.id.action_account_dest_to_auth_dest)

@@ -16,9 +16,9 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
 
     private val publicSites = ArrayList<SiteModel>()
     private var user = UserModel()
-    lateinit var userId: String
-    lateinit var db: FirebaseFirestore
-    lateinit var st: StorageReference
+    private lateinit var userId: String
+    private lateinit var db: FirebaseFirestore
+    private lateinit var st: StorageReference
 
     override fun findAll(): List<SiteModel> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -39,7 +39,13 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     }
 
     override fun delete(site: SiteModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        db.collection("sites").document(site.id).delete()
+            .addOnSuccessListener {
+                info { "Site added" }
+            }
+            .addOnFailureListener {
+                info { it }
+            }
     }
 
     override fun findById(id: Long): SiteModel? {
@@ -70,10 +76,10 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                 return@addSnapshotListener
             }
             if (snapshot != null) {
+                info { snapshot.documents }
                 for (doc in snapshot.documents) {
                     val newSite = doc.toObject(SiteModel::class.java)!!
                     newSite.id = doc.id
-                    info { doc.data }
                     if (user.visitedSites.contains(newSite.id))
                         newSite.isVisited = true
                     publicSites.add(newSite)

@@ -24,13 +24,13 @@ class SitePresenter(view: BaseView) : BasePresenter(view) {
 
     fun populateMap(map: GoogleMap) {
         map.uiSettings.isZoomControlsEnabled = false
-        val loc = LatLng(site.location.getValue("lat"), site.location.getValue("lng"))
+        val loc = LatLng(site.location.lat, site.location.lng)
         val options = MarkerOptions().title(site.name).position(loc)
         map.addMarker(options)
         map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(
                 loc,
-                site.location.getValue("zoom").toFloat()
+                site.location.zoom
             )
         )
     }

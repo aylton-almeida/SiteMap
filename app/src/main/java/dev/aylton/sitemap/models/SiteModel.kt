@@ -10,5 +10,12 @@ data class SiteModel(
     var description: String = "",
     var image: String = "",
     var isVisited: Boolean = false,
-    var location: Map<String, Double> = mapOf("lat" to 0.0, "lng" to 0.0, "zoom" to 0.0)
+    var location: Location = Location()
+) : Parcelable
+
+@Parcelize
+data class Location(
+    var lat: Double = 0.0,
+    var lng: Double = 0.0,
+    var zoom: Float = 0.0f
 ) : Parcelable
