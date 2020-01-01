@@ -2,8 +2,6 @@ package dev.aylton.sitemap.views.auth
 
 import android.graphics.Color
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.helpers.hideKeyboard
 import dev.aylton.sitemap.views.BasePresenter
@@ -27,7 +25,7 @@ class AuthPresenter(view: BaseView?) : BasePresenter(view) {
                 view?.findNavController()?.navigate(R.id.action_signUp_dest_to_siteList_dest)
             else
                 view?.showSnackbar(it.exception?.message!!, Color.RED)
-            toggleEnable(true)
+            view?.toggleEnable(true)
             view?.hideProgress(view?.progressBar)
         }
     }
@@ -39,16 +37,8 @@ class AuthPresenter(view: BaseView?) : BasePresenter(view) {
                 view?.findNavController()?.navigate(R.id.action_signUp_dest_to_siteList_dest)
             }else
                 view?.showSnackbar(it.exception?.message!!, Color.RED)
-            toggleEnable(true)
+            view?.toggleEnable(true)
             view?.hideProgress(view?.progressBar)
         }
     }
-
-    fun toggleEnable(isEnabled: Boolean){
-        view?.btnSignUp?.isEnabled = isEnabled
-        view?.btnSignIn?.isEnabled = isEnabled
-        view?.textLayoutEmail?.isEnabled = isEnabled
-        view?.textLayoutPass?.isEnabled = isEnabled
-    }
-
 }

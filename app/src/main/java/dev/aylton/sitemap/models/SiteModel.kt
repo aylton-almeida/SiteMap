@@ -8,9 +8,9 @@ data class SiteModel(
     var id: String = "",
     var name: String = "",
     var description: String = "",
-    var image: String = "",
-    var isVisited: Boolean = false,
-    var isPublic: Boolean = false,
+    var images: ArrayList<String> = ArrayList(),
+    var visited: Boolean = false,
+    var public: Boolean = false,
     var userId: String = "",
     var location: Location = Location()
 ) : Parcelable

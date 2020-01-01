@@ -1,20 +1,21 @@
 package dev.aylton.sitemap.views
 
+import android.content.Intent
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.sitelist.TabsAdapter
-import kotlinx.android.synthetic.main.fragment_tabs.*
 import org.jetbrains.anko.AnkoLogger
 
+const val IMAGE_REQUEST = 1
+const val LOCATION_REQUEST = 2
 
 abstract class BaseView : Fragment(), AnkoLogger {
     private var basePresenter: BasePresenter? = null
@@ -45,6 +46,13 @@ abstract class BaseView : Fragment(), AnkoLogger {
         }.attach()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null) {
+            basePresenter?.doActivityResult(requestCode, resultCode, data)
+        }
+    }
+
     override fun onDestroy() {
         basePresenter?.onDestroy()
         super.onDestroy()
@@ -70,4 +78,5 @@ abstract class BaseView : Fragment(), AnkoLogger {
 
     open fun showSite(site: SiteModel) {}
     open fun showSites(sites: List<SiteModel>) {}
+    open fun toggleEnable(isEnabled: Boolean) {}
 }

@@ -2,15 +2,9 @@ package dev.aylton.sitemap.views.sitelist
 
 import android.os.Bundle
 import android.view.*
-import com.google.android.material.tabs.TabLayoutMediator
 import dev.aylton.sitemap.R
-import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
-import dev.aylton.sitemap.views.sitelist.privatesitelist.PrivateSiteListPresenter
-import dev.aylton.sitemap.views.sitelist.privatesitelist.PrivateSiteListView
-import dev.aylton.sitemap.views.sitelist.publicsitelist.PublicSiteListView
-import kotlinx.android.synthetic.main.fragment_tabs.*
-import org.jetbrains.anko.info
+import kotlinx.android.synthetic.main.fragment_site_list.*
 
 class SiteListView : BaseView() {
 
@@ -21,7 +15,7 @@ class SiteListView : BaseView() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_tabs, container, false)
+        return inflater.inflate(R.layout.fragment_site_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

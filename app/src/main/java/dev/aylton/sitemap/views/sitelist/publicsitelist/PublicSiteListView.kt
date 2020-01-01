@@ -1,7 +1,9 @@
 package dev.aylton.sitemap.views.sitelist.publicsitelist
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView

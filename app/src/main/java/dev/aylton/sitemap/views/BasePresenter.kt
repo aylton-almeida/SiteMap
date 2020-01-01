@@ -1,5 +1,6 @@
 package dev.aylton.sitemap.views
 
+import android.content.Intent
 import com.google.firebase.auth.FirebaseAuth
 import dev.aylton.sitemap.MainApp
 import dev.aylton.sitemap.models.firebase.SiteFireStore
@@ -21,5 +22,8 @@ open class BasePresenter(var view: BaseView?): AnkoLogger {
 
     open fun onDestroy() {
         view = null
+    }
+
+    open fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
     }
 }

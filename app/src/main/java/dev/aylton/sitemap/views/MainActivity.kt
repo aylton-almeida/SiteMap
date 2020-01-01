@@ -1,8 +1,7 @@
 package dev.aylton.sitemap.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 import dev.aylton.sitemap.R
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info

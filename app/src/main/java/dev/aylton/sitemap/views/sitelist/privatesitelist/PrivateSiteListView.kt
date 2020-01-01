@@ -11,7 +11,7 @@ import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
 import dev.aylton.sitemap.views.sitelist.SiteListAdapter
 import dev.aylton.sitemap.views.sitelist.SiteListener
-import kotlinx.android.synthetic.main.fragment_private_site_list.recyclerView
+import kotlinx.android.synthetic.main.fragment_private_site_list.*
 
 class PrivateSiteListView : BaseView(), SiteListener {
 
@@ -29,6 +29,10 @@ class PrivateSiteListView : BaseView(), SiteListener {
         super.onViewCreated(view, savedInstanceState)
 
         presenter = initPresenter(PrivateSiteListPresenter(this)) as PrivateSiteListPresenter
+
+        fab.setOnClickListener {
+            presenter.navigateEditSiteView()
+        }
     }
 
     override fun showSites(sites: List<SiteModel>) {

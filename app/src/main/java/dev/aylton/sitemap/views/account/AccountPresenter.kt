@@ -2,7 +2,6 @@ package dev.aylton.sitemap.views.account
 
 import androidx.navigation.fragment.findNavController
 import dev.aylton.sitemap.R
-import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView
 

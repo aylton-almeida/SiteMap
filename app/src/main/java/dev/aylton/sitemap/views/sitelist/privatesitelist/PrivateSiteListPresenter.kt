@@ -25,4 +25,8 @@ class PrivateSiteListPresenter(view: BaseView) : BasePresenter(view) {
     fun setIsVisited(site: SiteModel, isVisited: Boolean) {
         fireStore.setIsVisited(site, isVisited)
     }
+
+    fun navigateEditSiteView() {
+        view?.findNavController()?.navigate(R.id.action_siteList_dest_to_editSite_dest)
+    }
 }

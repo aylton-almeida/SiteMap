@@ -70,7 +70,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         db = FirebaseFirestore.getInstance()
         st = FirebaseStorage.getInstance().reference
 
-        db.collection("sites").whereEqualTo("isPublic", isPublic)
+        db.collection("sites").whereEqualTo("public", isPublic)
             .addSnapshotListener { snapshot, e ->
                 if (isPublic) publicSites.clear() else privateSites.clear()
                 if (e != null) {
@@ -82,8 +82,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                         val newSite = doc.toObject(SiteModel::class.java)!!
                         newSite.id = doc.id
                         if (user.visitedSites.contains(newSite.id))
-                            newSite.isVisited = true
-                        info { newSite }
+                            newSite.visited = true
                         if (isPublic) publicSites.add(newSite)
                         else
                             if (newSite.userId == userId)
@@ -105,9 +104,9 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                 if (snapshot.data != null)
                     user = snapshot.toObject(UserModel::class.java)!!
                 for (site in publicSites)
-                    site.isVisited = user.visitedSites.contains(site.id)
+                    site.visited = user.visitedSites.contains(site.id)
                 for (site in privateSites)
-                    site.isVisited = user.visitedSites.contains(site.id)
+                    site.visited = user.visitedSites.contains(site.id)
                 callback()
             } else
                 info { "Current data: null" }

@@ -6,7 +6,6 @@ import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView
 
 class SiteListPresenter(view: BaseView) : BasePresenter(view) {
-
     fun navigateAccountView() {
         view?.findNavController()?.navigate(R.id.action_siteList_dest_to_account_dest)
     }

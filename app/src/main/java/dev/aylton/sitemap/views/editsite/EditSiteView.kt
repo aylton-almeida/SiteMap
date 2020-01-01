@@ -1,12 +1,13 @@
 package dev.aylton.sitemap.views.editsite
 
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dev.aylton.sitemap.R
+import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_edit_site.*
 
@@ -30,4 +31,14 @@ class EditSiteView : BaseView() {
         init(toolbar, upEnabled = true, optionsMenu = false)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null)
+            presenter.doActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun showSite(site: SiteModel) {
+        // TODO: Implementar
+//        Glide.with(this).load(site.image).into(imageView)
+    }
 }

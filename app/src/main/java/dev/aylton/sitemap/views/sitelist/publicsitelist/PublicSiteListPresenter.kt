@@ -3,7 +3,6 @@ package dev.aylton.sitemap.views.sitelist.publicsitelist
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import dev.aylton.sitemap.R
-import dev.aylton.sitemap.models.Location
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView
