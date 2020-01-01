@@ -16,9 +16,9 @@ interface SiteListener {
     fun onSiteChecked(site: SiteModel, isChecked: Boolean)
 }
 
-class SiteListAsapter(private var sites: List<SiteModel>,
+class SiteListAdapter(private var sites: List<SiteModel>,
                       private val listener: SiteListener
-) : RecyclerView.Adapter<SiteListAsapter.ViewHolder>(), AnkoLogger {
+) : RecyclerView.Adapter<SiteListAdapter.ViewHolder>(), AnkoLogger {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(

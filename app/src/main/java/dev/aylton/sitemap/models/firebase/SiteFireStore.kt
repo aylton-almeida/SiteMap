@@ -14,7 +14,8 @@ import org.jetbrains.anko.info
 
 class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
 
-    private val publicSites = ArrayList<SiteModel>()
+    val publicSites = ArrayList<SiteModel>()
+    val privateSites = ArrayList<SiteModel>()
     private var user = UserModel()
     private lateinit var userId: String
     private lateinit var db: FirebaseFirestore
@@ -64,31 +65,35 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         db.collection("users").document(userId).set(user)
     }
 
-    fun fetchSites(callback: (docs: ArrayList<SiteModel>) -> Unit) {
+    fun fetchSites(callback: () -> Unit, isPublic: Boolean) {
         userId = FirebaseAuth.getInstance().currentUser!!.uid
         db = FirebaseFirestore.getInstance()
         st = FirebaseStorage.getInstance().reference
 
-        db.collection("sites").addSnapshotListener { snapshot, e ->
-            publicSites.clear()
-            if (e != null) {
-                info("Listen Failed: $e")
-                return@addSnapshotListener
-            }
-            if (snapshot != null) {
-                info { snapshot.documents }
-                for (doc in snapshot.documents) {
-                    val newSite = doc.toObject(SiteModel::class.java)!!
-                    newSite.id = doc.id
-                    if (user.visitedSites.contains(newSite.id))
-                        newSite.isVisited = true
-                    publicSites.add(newSite)
+        db.collection("sites").whereEqualTo("isPublic", isPublic)
+            .addSnapshotListener { snapshot, e ->
+                if (isPublic) publicSites.clear() else privateSites.clear()
+                if (e != null) {
+                    info("Listen Failed: $e")
+                    return@addSnapshotListener
                 }
-                callback(publicSites)
-            } else {
-                info("Current data: null")
+                if (snapshot != null) {
+                    for (doc in snapshot.documents) {
+                        val newSite = doc.toObject(SiteModel::class.java)!!
+                        newSite.id = doc.id
+                        if (user.visitedSites.contains(newSite.id))
+                            newSite.isVisited = true
+                        info { newSite }
+                        if (isPublic) publicSites.add(newSite)
+                        else
+                            if (newSite.userId == userId)
+                                privateSites.add(newSite)
+                    }
+                    callback()
+                } else {
+                    info("Current data: null")
+                }
             }
-        }
 
         db.collection("users").document(userId).addSnapshotListener { snapshot, e ->
             user = UserModel()
@@ -101,7 +106,9 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                     user = snapshot.toObject(UserModel::class.java)!!
                 for (site in publicSites)
                     site.isVisited = user.visitedSites.contains(site.id)
-                callback(publicSites)
+                for (site in privateSites)
+                    site.isVisited = user.visitedSites.contains(site.id)
+                callback()
             } else
                 info { "Current data: null" }
         }

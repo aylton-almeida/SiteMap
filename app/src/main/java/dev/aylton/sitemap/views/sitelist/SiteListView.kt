@@ -6,7 +6,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
+import dev.aylton.sitemap.views.sitelist.privatesitelist.PrivateSiteListPresenter
+import dev.aylton.sitemap.views.sitelist.privatesitelist.PrivateSiteListView
+import dev.aylton.sitemap.views.sitelist.publicsitelist.PublicSiteListView
 import kotlinx.android.synthetic.main.fragment_tabs.*
+import org.jetbrains.anko.info
 
 class SiteListView : BaseView() {
 
@@ -26,12 +30,7 @@ class SiteListView : BaseView() {
 
         init(toolbar, upEnabled = false, optionsMenu = true)
 
-        viewPager.adapter = TabsAdapter(this)
-
-        TabLayoutMediator(tabs, viewPager) { tab, position ->
-            tab.text = if (position == 0) "Public List"
-            else "Private List"
-        }.attach()
+        initTabs(viewPager, tabs)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

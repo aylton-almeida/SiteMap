@@ -5,7 +5,7 @@ import android.view.*
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
-import dev.aylton.sitemap.views.sitelist.SiteListAsapter
+import dev.aylton.sitemap.views.sitelist.SiteListAdapter
 import dev.aylton.sitemap.views.sitelist.SiteListener
 import kotlinx.android.synthetic.main.fragment_public_site_list.*
 
@@ -34,7 +34,7 @@ class PublicSiteListView : BaseView(),
 
     override fun showSites(sites: List<SiteModel>) {
         recyclerView?.adapter =
-            SiteListAsapter(sites, this)
+            SiteListAdapter(sites, this)
     }
 
     override fun onSiteClick(site: SiteModel) {

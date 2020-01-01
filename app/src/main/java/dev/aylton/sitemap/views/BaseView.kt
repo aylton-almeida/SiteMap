@@ -5,8 +5,14 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dev.aylton.sitemap.models.SiteModel
+import dev.aylton.sitemap.views.sitelist.TabsAdapter
+import kotlinx.android.synthetic.main.fragment_tabs.*
 import org.jetbrains.anko.AnkoLogger
 
 
@@ -28,6 +34,15 @@ abstract class BaseView : Fragment(), AnkoLogger {
     fun initPresenter(presenter: BasePresenter): BasePresenter {
         basePresenter = presenter
         return presenter
+    }
+
+    fun initTabs(viewPager: ViewPager2, tabs: TabLayout){
+        viewPager.adapter = TabsAdapter(this)
+
+        TabLayoutMediator(tabs,viewPager) { tab, position ->
+            tab.text = if (position == 0) "Public List"
+            else "Private List"
+        }.attach()
     }
 
     override fun onDestroy() {
