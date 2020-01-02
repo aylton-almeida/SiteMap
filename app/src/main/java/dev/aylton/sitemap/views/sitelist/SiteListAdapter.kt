@@ -9,7 +9,6 @@ import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import kotlinx.android.synthetic.main.card_site.view.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 interface SiteListener {
     fun onSiteClick(site: SiteModel)

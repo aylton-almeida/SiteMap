@@ -2,22 +2,44 @@ package dev.aylton.sitemap.views.editsite
 
 import android.content.Intent
 import android.graphics.Color
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import dev.aylton.sitemap.helpers.showImagePicker
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView
 import dev.aylton.sitemap.views.IMAGE_REQUEST
+import org.jetbrains.anko.info
 
 class EditSitePresenter(view: BaseView) : BasePresenter(view) {
 
     private val site: SiteModel = view.arguments?.getParcelable("site") ?: SiteModel()
-    val isEditMode = view.arguments!!.getBoolean("isEditMode")
+    private val isEditMode = view.arguments!!.getBoolean("isEditMode")
 
     init {
         if (isEditMode)
             view.showSite(site)
         else
             view.showSite(SiteModel())
+    }
+
+    fun populateMap(map: GoogleMap) {
+        map.uiSettings.isZoomControlsEnabled = false
+        val loc = LatLng(site.location.lat, site.location.lng)
+        val options = MarkerOptions().title(site.name).position(loc)
+        map.addMarker(options)
+        map.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                loc,
+                site.location.zoom
+            )
+        )
+    }
+
+    fun saveSite() {
+        // TODO: Implement
     }
 
     fun doSelectImage() {
