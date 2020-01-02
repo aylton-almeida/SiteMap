@@ -43,7 +43,16 @@
         android:id="@+id/editSite_dest"
         android:name="dev.aylton.sitemap.views.editsite.EditSiteView"
         android:label="fragment_edit_site"
-        tools:layout="@layout/fragment_edit_site" />
+        tools:layout="@layout/fragment_edit_site" >
+        <argument
+            android:name="isEditMode"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="site"
+            app:argType="dev.aylton.sitemap.models.SiteModel"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/site_dest"
         android:name="dev.aylton.sitemap.views.site.SiteView"

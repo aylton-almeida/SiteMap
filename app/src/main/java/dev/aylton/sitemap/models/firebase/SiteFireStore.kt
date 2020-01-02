@@ -26,6 +26,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     }
 
     override fun create(site: SiteModel) {
+        // TODO: Finish implementation
         db.collection("sites").document().set(site)
             .addOnSuccessListener {
                 info { "Site added" }
@@ -40,6 +41,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     }
 
     override fun delete(site: SiteModel) {
+        // TODO: Finish implementation
         db.collection("sites").document(site.id).delete()
             .addOnSuccessListener {
                 info { "Site added" }

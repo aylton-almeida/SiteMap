@@ -9,6 +9,7 @@ import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import kotlinx.android.synthetic.main.card_site.view.*
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 interface SiteListener {
     fun onSiteClick(site: SiteModel)
@@ -43,7 +44,7 @@ class SiteListAdapter(private var sites: List<SiteModel>,
             itemView.siteName.text = site.name
             itemView.siteDescription.text = site.description
             itemView.checkbox.isChecked = site.visited
-            Glide.with(itemView.context).load(site.images[0]).into(itemView.imageIcon)
+            Glide.with(itemView.context).load(site.images.first()).into(itemView.imageIcon)
             itemView.setOnClickListener { listener.onSiteClick(site) }
             itemView.checkbox.setOnClickListener { listener.onSiteChecked(site, itemView.checkbox.isChecked) }
         }

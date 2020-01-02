@@ -46,7 +46,6 @@ class SiteView : BaseView() {
     }
 
     override fun showSite(site: SiteModel) {
-
         val imageListener =
             ImageListener { position, imageView ->
                 Glide

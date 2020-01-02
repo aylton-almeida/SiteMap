@@ -27,6 +27,6 @@ class PrivateSiteListPresenter(view: BaseView) : BasePresenter(view) {
     }
 
     fun navigateEditSiteView() {
-        view?.findNavController()?.navigate(R.id.action_siteList_dest_to_editSite_dest)
+        view?.findNavController()?.navigate(R.id.action_siteList_dest_to_editSite_dest, bundleOf("isEditMode" to true))
     }
 }
