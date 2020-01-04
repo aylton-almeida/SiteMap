@@ -17,7 +17,7 @@ data class SiteModel(
 
 @Parcelize
 data class Location(
-    var lat: Double = 0.0,
-    var lng: Double = 0.0,
-    var zoom: Float = 0.0f
+    var lat: Double = 49.0030,
+    var lng: Double = 12.0957,
+    var zoom: Float = 15f
 ) : Parcelable

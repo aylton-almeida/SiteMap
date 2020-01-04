@@ -1,15 +1,19 @@
 package dev.aylton.sitemap.models.firebase
 
 import android.content.Context
+import android.graphics.Bitmap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import dev.aylton.sitemap.helpers.readImageFromPath
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.models.SiteStore
 import dev.aylton.sitemap.models.UserModel
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import java.io.ByteArrayOutputStream
+import java.io.File
 
 
 class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
@@ -26,14 +30,41 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     }
 
     override fun create(site: SiteModel) {
-        // TODO: Finish implementation
-        db.collection("sites").document().set(site)
-            .addOnSuccessListener {
-                info { "Site added" }
+        site.userId = userId
+        val key = db.collection("sites").document().id
+        key.let {
+            site.id = key
+            db.collection("sites").document(site.id).set(site)
+            getImages(site)
+        }
+    }
+
+    private fun getImages(site: SiteModel) {
+        if (site.images.size > 0) {
+            for (image in site.images) {
+                val fileName = File(image)
+                val imageName = fileName.name
+
+                val imageRef = st.child("sites/${site.id}/$imageName")
+                val baos = ByteArrayOutputStream()
+                val bitMap = readImageFromPath(context, image)
+
+                bitMap?.let {
+                    bitMap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                    val data = baos.toByteArray()
+                    val uploadTask = imageRef.putBytes(data)
+                    uploadTask.addOnFailureListener {
+                        info { it.message }
+                    }
+                        .addOnSuccessListener { taskSnapshot ->
+                            taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                                site.images[site.images.indexOf(image)] = it.toString()
+                                db.collection("sites").document(site.id).set(site)
+                            }
+                        }
+                }
             }
-            .addOnFailureListener {
-                info { "Site failed: $it" }
-            }
+        }
     }
 
     override fun update(site: SiteModel) {
@@ -82,7 +113,6 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                 if (snapshot != null) {
                     for (doc in snapshot.documents) {
                         val newSite = doc.toObject(SiteModel::class.java)!!
-                        newSite.id = doc.id
                         if (user.visitedSites.contains(newSite.id))
                             newSite.visited = true
                         if (isPublic) publicSites.add(newSite)

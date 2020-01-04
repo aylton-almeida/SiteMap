@@ -2,6 +2,7 @@ package dev.aylton.sitemap.views.editsite
 
 import android.content.Intent
 import android.graphics.Color
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -18,7 +19,7 @@ import org.jetbrains.anko.info
 
 class EditSitePresenter(view: BaseView) : BasePresenter(view) {
 
-    lateinit var map: GoogleMap
+    private lateinit var map: GoogleMap
     private val site: SiteModel = view.arguments?.getParcelable("site") ?: SiteModel()
     private val isEditMode = view.arguments!!.getBoolean("isEditMode")
 
@@ -52,13 +53,12 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
     fun saveSite() {
         if (isEditMode) fireStore.update(site)
         else fireStore.create(site)
+        view?.findNavController()?.popBackStack()
     }
 
     fun doSelectImage() {
-        if (site.images.size < 4)
-            showImagePicker(view!!, IMAGE_REQUEST)
-        else
-            view?.showSnackbar("You can only add up to 4 images", Color.RED)
+        if (site.images.size < 4) showImagePicker(view!!, IMAGE_REQUEST)
+        else view?.showSnackbar("You can only add up to 4 images", Color.RED)
     }
 
     fun doChangeLocation() {
@@ -81,5 +81,13 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
                 doUpdateMap()
             }
         }
+    }
+
+    fun updateName(name: String){
+        site.name = name
+    }
+
+    fun updateDescription(description: String){
+        site.description = description
     }
 }

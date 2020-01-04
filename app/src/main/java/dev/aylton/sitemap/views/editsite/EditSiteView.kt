@@ -50,20 +50,22 @@ class EditSiteView : BaseView() {
 
         fab.hide()
 
-        inputName.addTextChangedListener { validateForm() }
+        inputName.addTextChangedListener {
+            presenter.updateName(inputName.text.toString())
+            validateForm()
+        }
 
-        inputDescription.addTextChangedListener { validateForm() }
+        inputDescription.addTextChangedListener {
+            presenter.updateDescription(it.toString())
+            validateForm()
+        }
     }
 
     private fun validateForm() {
-        inputName.text?.let {
-            inputDescription.text?.let {
-                if (inputName.text!!.isNotEmpty() && inputDescription.text!!.isNotEmpty())
-                    fab.show()
-                else
-                    fab.hide()
-            }
-        }
+        if (inputName.text!!.isNotEmpty() && inputDescription.text!!.isNotEmpty())
+            fab.show()
+        else
+            fab.hide()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
