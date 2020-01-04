@@ -16,4 +16,7 @@
     <string name="select_site_image">Select site image</string>
     <string name="add_image">Add image</string>
     <string name="item_save">Save</string>
+    <string name="change_location">Change Location</string>
+    <string name="latitude">Lat: %1$.4f</string>
+    <string name="longitude">Lng: %1$.4f</string>
 </resources>

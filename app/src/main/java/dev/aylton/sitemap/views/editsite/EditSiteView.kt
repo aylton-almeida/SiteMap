@@ -4,9 +4,9 @@ package dev.aylton.sitemap.views.editsite
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
 import com.synnapps.carouselview.ImageListener
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
@@ -16,18 +16,17 @@ import kotlinx.android.synthetic.main.fragment_edit_site.*
 import kotlinx.android.synthetic.main.fragment_edit_site.carouselView
 import kotlinx.android.synthetic.main.fragment_edit_site.mapView
 import kotlinx.android.synthetic.main.fragment_edit_site.toolbar
-import kotlinx.android.synthetic.main.fragment_site.*
+import kotlinx.android.synthetic.main.fragment_edit_site.textLng
+import kotlinx.android.synthetic.main.fragment_edit_site.textLat
 
 class EditSiteView : BaseView() {
 
     private lateinit var presenter: EditSitePresenter
-    private lateinit var map: GoogleMap
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_site, container, false)
     }
 
@@ -40,23 +39,31 @@ class EditSiteView : BaseView() {
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
-            map = it
-            presenter.populateMap(map)
+            presenter.configureMap(it)
         }
 
         btnAddImg.setOnClickListener { presenter.doSelectImage() }
+
+        btnChangeLocation.setOnClickListener { presenter.doChangeLocation() }
+
+        fab.setOnClickListener { presenter.saveSite() }
+
+        fab.hide()
+
+        inputName.addTextChangedListener { validateForm() }
+
+        inputDescription.addTextChangedListener { validateForm() }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_edit, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_save -> presenter.saveSite()
+    private fun validateForm() {
+        inputName.text?.let {
+            inputDescription.text?.let {
+                if (inputName.text!!.isNotEmpty() && inputDescription.text!!.isNotEmpty())
+                    fab.show()
+                else
+                    fab.hide()
+            }
         }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -66,6 +73,7 @@ class EditSiteView : BaseView() {
     }
 
     override fun showSite(site: SiteModel) {
+        // Update images
         val imageListener =
             ImageListener { position, imageView ->
                 if (site.images.size == 0)
@@ -87,6 +95,10 @@ class EditSiteView : BaseView() {
             carouselView.pageCount = 1
         else
             carouselView.pageCount = site.images.size
+
+        // Update location
+        textLat.text = String.format(resources.getString(R.string.latitude), site.location.lat)
+        textLng.text = String.format(resources.getString(R.string.longitude), site.location.lng)
     }
 
     override fun onDestroyView() {

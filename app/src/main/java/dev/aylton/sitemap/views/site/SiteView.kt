@@ -23,7 +23,6 @@ class SiteView : BaseView() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_site, container, false)
     }
 
@@ -46,6 +45,7 @@ class SiteView : BaseView() {
     }
 
     override fun showSite(site: SiteModel) {
+        // Update Images
         val imageListener =
             ImageListener { position, imageView ->
                 Glide
@@ -59,6 +59,10 @@ class SiteView : BaseView() {
         textDescription.text = site.description
         carouselView.setImageListener(imageListener)
         carouselView.pageCount = site.images.size
+
+        // Update location
+        textLat.text = String.format(resources.getString(R.string.latitude), site.location.lat)
+        textLng.text = String.format(resources.getString(R.string.longitude), site.location.lng)
     }
 
     override fun onDestroyView() {

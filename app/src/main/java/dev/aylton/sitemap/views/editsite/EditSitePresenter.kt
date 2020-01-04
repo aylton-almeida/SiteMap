@@ -7,14 +7,18 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dev.aylton.sitemap.helpers.showImagePicker
+import dev.aylton.sitemap.models.Location
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView
 import dev.aylton.sitemap.views.IMAGE_REQUEST
+import dev.aylton.sitemap.views.LOCATION_REQUEST
+import dev.aylton.sitemap.views.editlocation.EditLocationView
 import org.jetbrains.anko.info
 
 class EditSitePresenter(view: BaseView) : BasePresenter(view) {
 
+    lateinit var map: GoogleMap
     private val site: SiteModel = view.arguments?.getParcelable("site") ?: SiteModel()
     private val isEditMode = view.arguments!!.getBoolean("isEditMode")
 
@@ -25,7 +29,13 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
             view.showSite(SiteModel())
     }
 
-    fun populateMap(map: GoogleMap) {
+    fun configureMap(m: GoogleMap) {
+        map = m
+        doUpdateMap()
+    }
+
+    private fun doUpdateMap() {
+        map.clear()
         map.uiSettings.isZoomControlsEnabled = false
         val loc = LatLng(site.location.lat, site.location.lng)
         val options = MarkerOptions().title(site.name).position(loc)
@@ -36,10 +46,12 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
                 site.location.zoom
             )
         )
+        view?.showSite(site)
     }
 
     fun saveSite() {
-        // TODO: Implement
+        if (isEditMode) fireStore.update(site)
+        else fireStore.create(site)
     }
 
     fun doSelectImage() {
@@ -47,6 +59,12 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
             showImagePicker(view!!, IMAGE_REQUEST)
         else
             view?.showSnackbar("You can only add up to 4 images", Color.RED)
+    }
+
+    fun doChangeLocation() {
+        val intent = Intent(view?.context, EditLocationView::class.java)
+        intent.putExtra("location", site.location)
+        view?.startActivityForResult(intent, LOCATION_REQUEST)
     }
 
     override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -57,11 +75,11 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
                     site.images.add(image)
                 view?.showSite(site)
             }
-//            LOCATION_REQUEST -> {
-//                val location = data.extras?.getParcelable<Location>("location")!!
-//                placemark.location = location
-//                locationUpdate(location)
-//            }
+            LOCATION_REQUEST -> {
+                val location = data.extras?.getParcelable<Location>("location")!!
+                site.location = location
+                doUpdateMap()
+            }
         }
     }
 }
