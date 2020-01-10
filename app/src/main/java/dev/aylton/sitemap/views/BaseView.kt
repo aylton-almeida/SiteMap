@@ -14,6 +14,7 @@ import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.sitelist.TabsAdapter
 import org.jetbrains.anko.AnkoLogger
 
+
 const val IMAGE_REQUEST = 1
 const val LOCATION_REQUEST = 2
 

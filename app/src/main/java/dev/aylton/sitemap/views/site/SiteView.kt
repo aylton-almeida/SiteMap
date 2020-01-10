@@ -33,10 +33,6 @@ class SiteView : BaseView() {
 
         init(toolbar, upEnabled = true, optionsMenu = false, title = "Details")
 
-        fab.setOnClickListener {
-            presenter.navigateEditSite()
-        }
-
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
             map = it

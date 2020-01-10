@@ -19,4 +19,5 @@
     <string name="change_location">Change Location</string>
     <string name="latitude">Lat: %1$.4f</string>
     <string name="longitude">Lng: %1$.4f</string>
+    <string name="latlng">Lat: %1$.2f Lng: %2$.2f</string>
 </resources>

@@ -2,9 +2,11 @@ package dev.aylton.sitemap.views.sitelist
 
 import android.os.Bundle
 import android.view.*
+import androidx.viewpager2.widget.ViewPager2
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_site_list.*
+import org.jetbrains.anko.info
 
 class SiteListView : BaseView() {
 

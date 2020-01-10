@@ -41,7 +41,7 @@ class SiteListAdapter(private var sites: List<SiteModel>,
 
         fun bind(site: SiteModel, listener: SiteListener) {
             itemView.siteName.text = site.name
-            itemView.siteDescription.text = site.description
+            itemView.siteLocation.text = String.format(itemView.resources.getString(R.string.latlng), site.location.lat, site.location.lng)
             itemView.checkbox.isChecked = site.visited
             Glide.with(itemView.context).load(site.images.first()).into(itemView.imageIcon)
             itemView.setOnClickListener { listener.onSiteClick(site) }

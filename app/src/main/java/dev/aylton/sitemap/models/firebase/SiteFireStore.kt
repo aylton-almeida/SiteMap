@@ -10,10 +10,13 @@ import dev.aylton.sitemap.helpers.readImageFromPath
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.models.SiteStore
 import dev.aylton.sitemap.models.UserModel
+import dev.aylton.sitemap.models.VisitedSite
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
@@ -74,12 +77,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     override fun delete(site: SiteModel) {
         // TODO: Finish implementation
         db.collection("sites").document(site.id).delete()
-            .addOnSuccessListener {
-                info { "Site added" }
-            }
-            .addOnFailureListener {
-                info { it }
-            }
+        st.child("sites/${site.id}").delete()
     }
 
     override fun findById(id: Long): SiteModel? {
@@ -92,9 +90,9 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
 
     fun setIsVisited(site: SiteModel, isVisited: Boolean = true) {
         if (isVisited)
-            user.visitedSites.add(site.id)
+            user.visitedSites.add(VisitedSite(site.id, Date()))
         else
-            user.visitedSites.remove(site.id)
+            user.visitedSites.remove(user.visitedSites.find { it.id == site.id })
         db.collection("users").document(userId).set(user)
     }
 
@@ -113,7 +111,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                 if (snapshot != null) {
                     for (doc in snapshot.documents) {
                         val newSite = doc.toObject(SiteModel::class.java)!!
-                        if (user.visitedSites.contains(newSite.id))
+                        if (user.visitedSites.find { it.id == newSite.id} != null)
                             newSite.visited = true
                         if (isPublic) publicSites.add(newSite)
                         else
@@ -136,9 +134,9 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                 if (snapshot.data != null)
                     user = snapshot.toObject(UserModel::class.java)!!
                 for (site in publicSites)
-                    site.visited = user.visitedSites.contains(site.id)
+                    site.visited = user.visitedSites.find{it.id == site.id} != null
                 for (site in privateSites)
-                    site.visited = user.visitedSites.contains(site.id)
+                    site.visited = user.visitedSites.find{it.id == site.id} != null
                 callback()
             } else
                 info { "Current data: null" }
