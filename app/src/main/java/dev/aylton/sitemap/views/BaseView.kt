@@ -1,14 +1,24 @@
 package dev.aylton.sitemap.views
 
+import android.content.Intent
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dev.aylton.sitemap.models.SiteModel
+import dev.aylton.sitemap.views.sitelist.TabsAdapter
 import org.jetbrains.anko.AnkoLogger
 
+
+const val IMAGE_REQUEST = 1
+const val LOCATION_REQUEST = 2
+
+const val IMAGE_PLACEHOLDER = "https://firebasestorage.googleapis.com/v0/b/sitemap-cc4c4.appspot.com/o/sites%2FSitePlaceholder%2Fimage_placeholder.jpg?alt=media&token=88885587-9db3-476b-ad0f-62b43043e84d"
 
 abstract class BaseView : Fragment(), AnkoLogger {
     private var basePresenter: BasePresenter? = null
@@ -28,6 +38,22 @@ abstract class BaseView : Fragment(), AnkoLogger {
     fun initPresenter(presenter: BasePresenter): BasePresenter {
         basePresenter = presenter
         return presenter
+    }
+
+    fun initTabs(viewPager: ViewPager2, tabs: TabLayout){
+        viewPager.adapter = TabsAdapter(this)
+
+        TabLayoutMediator(tabs,viewPager) { tab, position ->
+            tab.text = if (position == 0) "Public List"
+            else "Private List"
+        }.attach()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null) {
+            basePresenter?.doActivityResult(requestCode, resultCode, data)
+        }
     }
 
     override fun onDestroy() {
@@ -55,4 +81,5 @@ abstract class BaseView : Fragment(), AnkoLogger {
 
     open fun showSite(site: SiteModel) {}
     open fun showSites(sites: List<SiteModel>) {}
+    open fun toggleEnable(isEnabled: Boolean) {}
 }

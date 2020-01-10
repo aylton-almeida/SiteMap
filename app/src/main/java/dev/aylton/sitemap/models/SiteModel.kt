@@ -8,14 +8,16 @@ data class SiteModel(
     var id: String = "",
     var name: String = "",
     var description: String = "",
-    var image: String = "",
-    var isVisited: Boolean = false,
+    var images: ArrayList<String> = ArrayList(),
+    var visited: Boolean = false,
+    var public: Boolean = false,
+    var userId: String = "",
     var location: Location = Location()
 ) : Parcelable
 
 @Parcelize
 data class Location(
-    var lat: Double = 0.0,
-    var lng: Double = 0.0,
-    var zoom: Float = 0.0f
+    var lat: Double = 49.0030,
+    var lng: Double = 12.0957,
+    var zoom: Float = 15f
 ) : Parcelable

@@ -2,17 +2,17 @@ package dev.aylton.sitemap.views.site
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.Marker
+import com.synnapps.carouselview.ImageListener
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_site.*
+
 
 class SiteView : BaseView() {
 
@@ -23,7 +23,6 @@ class SiteView : BaseView() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_site, container, false)
     }
 
@@ -34,10 +33,6 @@ class SiteView : BaseView() {
 
         init(toolbar, upEnabled = true, optionsMenu = false, title = "Details")
 
-        fab.setOnClickListener {
-            presenter.navigateEditSite()
-        }
-
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
             map = it
@@ -46,9 +41,24 @@ class SiteView : BaseView() {
     }
 
     override fun showSite(site: SiteModel) {
+        // Update Images
+        val imageListener =
+            ImageListener { position, imageView ->
+                Glide
+                    .with(this)
+                    .load(site.images[position])
+                    .centerCrop()
+                    .into(imageView)
+            }
+
         textName.text = site.name
         textDescription.text = site.description
-        Glide.with(this).load(site.image).into(imageView)
+        carouselView.setImageListener(imageListener)
+        carouselView.pageCount = site.images.size
+
+        // Update location
+        textLat.text = String.format(resources.getString(R.string.latitude), site.location.lat)
+        textLng.text = String.format(resources.getString(R.string.longitude), site.location.lng)
     }
 
     override fun onDestroyView() {

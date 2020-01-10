@@ -6,13 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
-
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_auth.*
-import org.jetbrains.anko.info
 
 class AuthView : BaseView() {
 
@@ -33,13 +29,13 @@ class AuthView : BaseView() {
 
         btnSignUp.setOnClickListener {
             showProgress(progressBar)
-            presenter.toggleEnable(false)
+            toggleEnable(false)
             val email = inputEmail.text.toString()
             val password = inputPass.text.toString()
             if (email == "" || password == "") {
                 showSnackbar("Please type an email and password", Color.RED)
                 hideProgress(progressBar)
-                presenter.toggleEnable(true)
+                toggleEnable(true)
             } else {
                 presenter.doSignUp(email, password)
             }
@@ -47,16 +43,23 @@ class AuthView : BaseView() {
 
         btnSignIn.setOnClickListener {
             showProgress(progressBar)
-            presenter.toggleEnable(false)
+            toggleEnable(false)
             val email = inputEmail.text.toString()
             val password = inputPass.text.toString()
             if (email == "" || password == "") {
                 showSnackbar("Please type an email and password", Color.RED)
                 hideProgress(progressBar)
-                presenter.toggleEnable(true)
+                toggleEnable(true)
             } else {
                 presenter.doSignIn(email, password)
             }
         }
+    }
+
+    override fun toggleEnable(isEnabled: Boolean){
+        btnSignUp.isEnabled = isEnabled
+        btnSignIn.isEnabled = isEnabled
+        textLayoutEmail.isEnabled = isEnabled
+        textLayoutPass.isEnabled = isEnabled
     }
 }

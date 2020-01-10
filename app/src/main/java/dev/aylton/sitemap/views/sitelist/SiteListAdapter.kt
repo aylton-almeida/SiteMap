@@ -16,9 +16,9 @@ interface SiteListener {
     fun onSiteChecked(site: SiteModel, isChecked: Boolean)
 }
 
-class SiteListAsapter(private var sites: List<SiteModel>,
+class SiteListAdapter(private var sites: List<SiteModel>,
                       private val listener: SiteListener
-) : RecyclerView.Adapter<SiteListAsapter.ViewHolder>(), AnkoLogger {
+) : RecyclerView.Adapter<SiteListAdapter.ViewHolder>(), AnkoLogger {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -41,9 +41,9 @@ class SiteListAsapter(private var sites: List<SiteModel>,
 
         fun bind(site: SiteModel, listener: SiteListener) {
             itemView.siteName.text = site.name
-            itemView.siteDescription.text = site.description
-            itemView.checkbox.isChecked = site.isVisited
-            Glide.with(itemView.context).load(site.image).into(itemView.imageIcon)
+            itemView.siteLocation.text = String.format(itemView.resources.getString(R.string.latlng), site.location.lat, site.location.lng)
+            itemView.checkbox.isChecked = site.visited
+            Glide.with(itemView.context).load(site.images.first()).into(itemView.imageIcon)
             itemView.setOnClickListener { listener.onSiteClick(site) }
             itemView.checkbox.setOnClickListener { listener.onSiteChecked(site, itemView.checkbox.isChecked) }
         }

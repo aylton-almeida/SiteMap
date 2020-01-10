@@ -11,7 +11,13 @@
     <string name="account_item">Account</string>
     <string name="settings_item">Settings</string>
     <string name="sign_out">Sign out</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="select_site_image">Select site image</string>
+    <string name="add_image">Add image</string>
+    <string name="item_save">Save</string>
+    <string name="change_location">Change Location</string>
+    <string name="latitude">Lat: %1$.4f</string>
+    <string name="longitude">Lng: %1$.4f</string>
+    <string name="latlng">Lat: %1$.2f Lng: %2$.2f</string>
 </resources>
