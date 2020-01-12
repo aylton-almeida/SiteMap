@@ -42,6 +42,20 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         }
     }
 
+
+    override fun update(site: SiteModel) {
+        db.collection("sites").document(site.id).set(site)
+        val oldSite: SiteModel? = if (site.userId.isEmpty())
+            publicSites.find { it.id == site.id }
+        else
+            privateSites.find { it.id == site.id }
+
+        oldSite.let {
+            if (!oldSite!!.images.containsAll(site.images))
+                getImages(site)
+        }
+    }
+
     private fun getImages(site: SiteModel) {
         if (site.images.size > 0) {
             for (image in site.images) {
@@ -68,10 +82,6 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                 }
             }
         }
-    }
-
-    override fun update(site: SiteModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun delete(site: SiteModel) {
@@ -111,7 +121,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                 if (snapshot != null) {
                     for (doc in snapshot.documents) {
                         val newSite = doc.toObject(SiteModel::class.java)!!
-                        if (user.visitedSites.find { it.id == newSite.id} != null)
+                        if (user.visitedSites.find { it.id == newSite.id } != null)
                             newSite.visited = true
                         if (isPublic) publicSites.add(newSite)
                         else
@@ -134,9 +144,9 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                 if (snapshot.data != null)
                     user = snapshot.toObject(UserModel::class.java)!!
                 for (site in publicSites)
-                    site.visited = user.visitedSites.find{it.id == site.id} != null
+                    site.visited = user.visitedSites.find { it.id == site.id } != null
                 for (site in privateSites)
-                    site.visited = user.visitedSites.find{it.id == site.id} != null
+                    site.visited = user.visitedSites.find { it.id == site.id } != null
                 callback()
             } else
                 info { "Current data: null" }

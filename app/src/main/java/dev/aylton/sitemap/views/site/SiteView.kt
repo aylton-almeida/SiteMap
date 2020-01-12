@@ -13,7 +13,6 @@ import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_site.*
 
-
 class SiteView : BaseView() {
 
     private lateinit var presenter: SitePresenter
@@ -38,6 +37,8 @@ class SiteView : BaseView() {
             map = it
             presenter.populateMap(map)
         }
+
+        fab.setOnClickListener { presenter.navigateEditSite() }
     }
 
     override fun showSite(site: SiteModel) {
@@ -79,10 +80,5 @@ class SiteView : BaseView() {
     override fun onResume() {
         super.onResume()
         mapView.onResume()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        mapView.onSaveInstanceState(outState)
     }
 }

@@ -1,23 +1,16 @@
 package dev.aylton.sitemap.views.editsite
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
-import com.google.android.gms.maps.GoogleMap
 import com.synnapps.carouselview.ImageListener
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
-import dev.aylton.sitemap.views.IMAGE_PLACEHOLDER
 import kotlinx.android.synthetic.main.fragment_edit_site.*
-import kotlinx.android.synthetic.main.fragment_edit_site.carouselView
-import kotlinx.android.synthetic.main.fragment_edit_site.mapView
-import kotlinx.android.synthetic.main.fragment_edit_site.toolbar
-import kotlinx.android.synthetic.main.fragment_edit_site.textLng
-import kotlinx.android.synthetic.main.fragment_edit_site.textLat
 
 class EditSiteView : BaseView() {
 
@@ -51,7 +44,7 @@ class EditSiteView : BaseView() {
         fab.hide()
 
         inputName.addTextChangedListener {
-            presenter.updateName(inputName.text.toString())
+            presenter.updateName(it.toString())
             validateForm()
         }
 
@@ -62,7 +55,7 @@ class EditSiteView : BaseView() {
     }
 
     private fun validateForm() {
-        if (inputName.text!!.isNotEmpty() && inputDescription.text!!.isNotEmpty())
+        if (inputName.text!!.isNotEmpty() && inputDescription.text!!.isNotEmpty() && presenter.getSiteImages().size > 0)
             fab.show()
         else
             fab.hide()
@@ -75,13 +68,18 @@ class EditSiteView : BaseView() {
     }
 
     override fun showSite(site: SiteModel) {
+        validateForm()
+        // Update fields
+        inputName.setText(site.name)
+        inputDescription.setText(site.description)
+
         // Update images
         val imageListener =
             ImageListener { position, imageView ->
                 if (site.images.size == 0)
                     Glide
                         .with(this)
-                        .load(IMAGE_PLACEHOLDER)
+                        .load(ContextCompat.getDrawable(context!!, R.drawable.image_placeholder))
                         .centerCrop()
                         .into(imageView)
                 else

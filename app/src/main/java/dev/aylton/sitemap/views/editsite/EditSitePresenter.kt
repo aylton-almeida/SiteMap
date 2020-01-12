@@ -15,13 +15,14 @@ import dev.aylton.sitemap.views.BaseView
 import dev.aylton.sitemap.views.IMAGE_REQUEST
 import dev.aylton.sitemap.views.LOCATION_REQUEST
 import dev.aylton.sitemap.views.editlocation.EditLocationView
+import kotlinx.android.synthetic.main.fragment_private_site_list.*
 import org.jetbrains.anko.info
 
 class EditSitePresenter(view: BaseView) : BasePresenter(view) {
 
-    private lateinit var map: GoogleMap
+    private var map: GoogleMap? = null
     private val site: SiteModel = view.arguments?.getParcelable("site") ?: SiteModel()
-    private val isEditMode = view.arguments!!.getBoolean("isEditMode")
+    private val isEditMode:Boolean = view.arguments!!.getBoolean("isEditMode")
 
     init {
         if (isEditMode)
@@ -36,12 +37,12 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
     }
 
     private fun doUpdateMap() {
-        map.clear()
-        map.uiSettings.isZoomControlsEnabled = false
+        map?.clear()
+        map?.uiSettings?.isZoomControlsEnabled = false
         val loc = LatLng(site.location.lat, site.location.lng)
         val options = MarkerOptions().title(site.name).position(loc)
-        map.addMarker(options)
-        map.moveCamera(
+        map?.addMarker(options)
+        map?.moveCamera(
             CameraUpdateFactory.newLatLngZoom(
                 loc,
                 site.location.zoom
@@ -89,5 +90,9 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
 
     fun updateDescription(description: String){
         site.description = description
+    }
+
+    fun getSiteImages(): ArrayList<String> {
+        return site.images
     }
 }

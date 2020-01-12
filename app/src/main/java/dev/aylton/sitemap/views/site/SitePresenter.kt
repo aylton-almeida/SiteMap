@@ -1,5 +1,6 @@
 package dev.aylton.sitemap.views.site
 
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -9,17 +10,20 @@ import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView
+import kotlinx.android.synthetic.main.fragment_site.*
 
 class SitePresenter(view: BaseView) : BasePresenter(view) {
 
     var site: SiteModel = view.arguments!!.getParcelable("site")!!
 
     init {
+        if (site.userId.isEmpty()) view.fab.hide()
         view.showSite(site)
     }
 
     fun navigateEditSite() {
-        view?.findNavController()?.navigate(R.id.action_siteView_to_editSiteView)
+        val isSitePublic = site.userId == ""
+        view?.findNavController()?.navigate(R.id.action_siteView_to_editSiteView, bundleOf("isEditMode" to true, "site" to site, "isSitePublic" to isSitePublic))
     }
 
     fun populateMap(map: GoogleMap) {

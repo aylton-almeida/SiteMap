@@ -18,8 +18,6 @@ import org.jetbrains.anko.AnkoLogger
 const val IMAGE_REQUEST = 1
 const val LOCATION_REQUEST = 2
 
-const val IMAGE_PLACEHOLDER = "https://firebasestorage.googleapis.com/v0/b/sitemap-cc4c4.appspot.com/o/sites%2FSitePlaceholder%2Fimage_placeholder.jpg?alt=media&token=88885587-9db3-476b-ad0f-62b43043e84d"
-
 abstract class BaseView : Fragment(), AnkoLogger {
     private var basePresenter: BasePresenter? = null
 
