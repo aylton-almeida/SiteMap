@@ -1,5 +1,6 @@
 package dev.aylton.sitemap.views.site
 
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,13 +18,18 @@ class SitePresenter(view: BaseView) : BasePresenter(view) {
     var site: SiteModel = view.arguments!!.getParcelable("site")!!
 
     init {
-        if (site.userId.isEmpty()) view.fab.hide()
+        view.speedDial.visibility = if (site.userId.isEmpty()) View.INVISIBLE else View.VISIBLE
         view.showSite(site)
     }
 
     fun navigateEditSite() {
         val isSitePublic = site.userId == ""
         view?.findNavController()?.navigate(R.id.action_siteView_to_editSiteView, bundleOf("isEditMode" to true, "site" to site, "isSitePublic" to isSitePublic))
+    }
+
+    fun deleteSite(){
+        fireStore.delete(site)
+        view?.findNavController()?.popBackStack()
     }
 
     fun populateMap(map: GoogleMap) {

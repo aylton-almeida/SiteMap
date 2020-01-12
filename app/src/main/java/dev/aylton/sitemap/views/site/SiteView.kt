@@ -3,6 +3,7 @@ package dev.aylton.sitemap.views.site
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
@@ -11,7 +12,9 @@ import com.synnapps.carouselview.ImageListener
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
+import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter
 import kotlinx.android.synthetic.main.fragment_site.*
+
 
 class SiteView : BaseView() {
 
@@ -38,7 +41,15 @@ class SiteView : BaseView() {
             presenter.populateMap(map)
         }
 
-        fab.setOnClickListener { presenter.navigateEditSite() }
+        speedDial.setMenuListener(object : SimpleMenuListenerAdapter() {
+            override fun onMenuItemSelected(item: MenuItem): Boolean {
+                when (item.itemId) {
+                    R.id.item_edit_site -> presenter.navigateEditSite()
+                    R.id.item_delete_site -> presenter.deleteSite()
+                }
+                return false
+            }
+        })
     }
 
     override fun showSite(site: SiteModel) {

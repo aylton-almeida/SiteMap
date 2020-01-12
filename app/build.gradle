@@ -63,4 +63,7 @@ dependencies {
 
     //Carousel
     implementation 'com.synnapps:carouselview:0.1.5'
+
+    //Speed Dial FAB
+    implementation 'io.github.yavski:fab-speed-dial:1.0.6'
 }

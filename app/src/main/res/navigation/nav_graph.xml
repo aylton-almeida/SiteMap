@@ -52,13 +52,6 @@
             android:name="site"
             app:argType="dev.aylton.sitemap.models.SiteModel"
             app:nullable="true" />
-        <action
-            android:id="@+id/action_editSite_dest_to_siteList_dest"
-            app:destination="@id/siteList_dest"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/slide_down"
-            app:popUpTo="@+id/siteList_dest"
-            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/site_dest"

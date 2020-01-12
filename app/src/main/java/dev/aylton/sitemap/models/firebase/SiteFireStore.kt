@@ -85,7 +85,6 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     }
 
     override fun delete(site: SiteModel) {
-        // TODO: Finish implementation
         db.collection("sites").document(site.id).delete()
         st.child("sites/${site.id}").delete()
     }
