@@ -3,6 +3,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 29
@@ -36,10 +38,32 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    //Glide
+    implementation "com.github.bumptech.glide:glide:4.10.0"
+
+    //Firebase
+    implementation "com.google.firebase:firebase-auth:19.2.0"
+    implementation "com.google.firebase:firebase-firestore:21.3.1"
+    implementation "com.google.firebase:firebase-storage:19.1.0"
+    implementation "com.google.firebase:firebase-analytics:17.2.1"
+
+    //Google Maps and location
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+
+    //Anko Logger
+    implementation "org.jetbrains.anko:anko-commons:0.10.8"
+
     //Material
-    implementation "com.google.android.material:material:$material_version"
+    implementation "com.google.android.material:material:1.2.0-alpha03"
 
     //Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.1.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.1.0"
+
+    //Carousel
+    implementation 'com.synnapps:carouselview:0.1.5'
+
+    //Speed Dial FAB
+    implementation 'io.github.yavski:fab-speed-dial:1.0.6'
 }

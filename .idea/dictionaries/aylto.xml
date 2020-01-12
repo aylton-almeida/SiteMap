@@ -2,7 +2,11 @@
   <dictionary name="aylto">
     <words>
       <w>aylton</w>
+      <w>editsite</w>
+      <w>firebase</w>
+      <w>sitelist</w>
       <w>sitemap</w>
+      <w>snackbar</w>
     </words>
   </dictionary>
 </component>
