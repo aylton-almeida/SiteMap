@@ -28,10 +28,6 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     private lateinit var db: FirebaseFirestore
     private lateinit var st: StorageReference
 
-    override fun findAll(): List<SiteModel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun create(site: SiteModel) {
         site.userId = userId
         val key = db.collection("sites").document().id
@@ -85,17 +81,8 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     }
 
     override fun delete(site: SiteModel) {
-        // TODO: Finish implementation
         db.collection("sites").document(site.id).delete()
         st.child("sites/${site.id}").delete()
-    }
-
-    override fun findById(id: Long): SiteModel? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun clear() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun setIsVisited(site: SiteModel, isVisited: Boolean = true) {
@@ -106,7 +93,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         db.collection("users").document(userId).set(user)
     }
 
-    fun fetchSites(callback: () -> Unit, isPublic: Boolean) {
+    override fun fetchSites(callback: () -> Unit, isPublic: Boolean) {
         userId = FirebaseAuth.getInstance().currentUser!!.uid
         db = FirebaseFirestore.getInstance()
         st = FirebaseStorage.getInstance().reference
