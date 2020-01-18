@@ -8,7 +8,6 @@
     <string name="signup">SignUp</string>
     <string name="signin">Sign In</string>
     <string name="site_image">Image site</string>
-    <string name="account_item">Account</string>
     <string name="settings_item">Settings</string>
     <string name="sign_out">Sign out</string>
     <string name="name">Name</string>
@@ -22,4 +21,12 @@
     <string name="latlng">Lat: %1$.2f Lng: %2$.2f</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="user_email">Email: %1$s</string>
+    <string name="user_pass">Password: %1$s</string>
+    <string name="your_stats">Your stats</string>
+    <string name="public_sites">Public sites: %1$i</string>
+    <string name="private_sites">Private sites: %1$i</string>
+    <string name="your_accound">Your accound</string>
+    <string name="visited_sites">Visited sites: %1$i</string>
+    <string name="site_lists">Site Lists</string>
 </resources>
