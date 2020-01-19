@@ -3,7 +3,7 @@ package dev.aylton.sitemap.views
 import android.content.Intent
 import com.google.firebase.auth.FirebaseAuth
 import dev.aylton.sitemap.MainApp
-import dev.aylton.sitemap.models.firebase.SiteFireStore
+import dev.aylton.sitemap.services.firebase.SiteFireStore
 import org.jetbrains.anko.AnkoLogger
 
 open class BasePresenter(var view: BaseView?): AnkoLogger {

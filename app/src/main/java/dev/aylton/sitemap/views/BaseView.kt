@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dev.aylton.sitemap.models.SiteModel
+import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.views.sitelist.TabsAdapter
 import org.jetbrains.anko.AnkoLogger
 
@@ -80,4 +81,5 @@ abstract class BaseView : Fragment(), AnkoLogger {
     open fun showSite(site: SiteModel) {}
     open fun showSites(sites: List<SiteModel>) {}
     open fun toggleEnable(isEnabled: Boolean) {}
+    open fun showUserData(user: UserModel, numPublicSites: Int, numPrivateSites: Int) {}
 }

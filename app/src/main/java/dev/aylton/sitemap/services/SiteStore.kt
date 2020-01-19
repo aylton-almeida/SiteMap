@@ -1,4 +1,6 @@
-package dev.aylton.sitemap.models
+package dev.aylton.sitemap.services
+
+import dev.aylton.sitemap.models.SiteModel
 
 interface SiteStore {
     fun create(site: SiteModel)

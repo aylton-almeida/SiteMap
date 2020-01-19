@@ -21,8 +21,7 @@ class AuthPresenter(view: BaseView?) : BasePresenter(view) {
     fun doSignIn(email: String, password: String) {
         hideKeyboard(view?.activity)
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-            if (it.isSuccessful)
-                view?.findNavController()?.navigate(R.id.action_signUp_dest_to_siteList_dest)
+            if (it.isSuccessful) view?.findNavController()?.navigate(R.id.action_signUp_dest_to_siteList_dest)
             else
                 view?.showSnackbar(it.exception?.message!!, Color.RED)
             view?.toggleEnable(true)
@@ -33,9 +32,7 @@ class AuthPresenter(view: BaseView?) : BasePresenter(view) {
     fun doSignUp(email: String, password: String) {
         hideKeyboard(view?.activity)
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-            if (it.isSuccessful) {
-                view?.findNavController()?.navigate(R.id.action_signUp_dest_to_siteList_dest)
-            }else
+            if (it.isSuccessful) view?.findNavController()?.navigate(R.id.action_signUp_dest_to_siteList_dest) else
                 view?.showSnackbar(it.exception?.message!!, Color.RED)
             view?.toggleEnable(true)
             view?.hideProgress(view?.progressBar)
