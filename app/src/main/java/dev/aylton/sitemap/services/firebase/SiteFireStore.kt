@@ -1,4 +1,4 @@
-package dev.aylton.sitemap.models.firebase
+package dev.aylton.sitemap.services.firebase
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -8,7 +8,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dev.aylton.sitemap.helpers.readImageFromPath
 import dev.aylton.sitemap.models.SiteModel
-import dev.aylton.sitemap.models.SiteStore
+import dev.aylton.sitemap.services.SiteStore
 import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.models.VisitedSite
 import org.jetbrains.anko.AnkoLogger
@@ -23,13 +23,12 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
 
     val publicSites = ArrayList<SiteModel>()
     val privateSites = ArrayList<SiteModel>()
-    private var user = UserModel()
-    private lateinit var userId: String
+    var user = UserModel()
     private lateinit var db: FirebaseFirestore
     private lateinit var st: StorageReference
 
     override fun create(site: SiteModel) {
-        site.userId = userId
+        site.userId = user.id
         val key = db.collection("sites").document().id
         key.let {
             site.id = key
@@ -83,18 +82,20 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     override fun delete(site: SiteModel) {
         db.collection("sites").document(site.id).delete()
         st.child("sites/${site.id}").delete()
+        setIsVisited(site, false)
     }
 
     fun setIsVisited(site: SiteModel, isVisited: Boolean = true) {
         if (isVisited)
             user.visitedSites.add(VisitedSite(site.id, Date()))
-        else
-            user.visitedSites.remove(user.visitedSites.find { it.id == site.id })
-        db.collection("users").document(userId).set(user)
+        else user.visitedSites.remove( user.visitedSites.find { it.id == site.id })
+        db.collection("users").document(user.id).set(user)
     }
 
     override fun fetchSites(callback: () -> Unit, isPublic: Boolean) {
-        userId = FirebaseAuth.getInstance().currentUser!!.uid
+        val currUser = FirebaseAuth.getInstance().currentUser!!
+        user.id = currUser.uid
+        user.email = currUser.email!!
         db = FirebaseFirestore.getInstance()
         st = FirebaseStorage.getInstance().reference
 
@@ -112,7 +113,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                             newSite.visited = true
                         if (isPublic) publicSites.add(newSite)
                         else
-                            if (newSite.userId == userId)
+                            if (newSite.userId == user.id)
                                 privateSites.add(newSite)
                     }
                     callback()
@@ -121,15 +122,17 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                 }
             }
 
-        db.collection("users").document(userId).addSnapshotListener { snapshot, e ->
-            user = UserModel()
+        db.collection("users").document(user.id).addSnapshotListener { snapshot, e ->
             if (e != null) {
                 info { "Listen failed $e" }
                 return@addSnapshotListener
             }
             if (snapshot != null) {
-                if (snapshot.data != null)
+                if (snapshot.data != null) {
                     user = snapshot.toObject(UserModel::class.java)!!
+                    user.email = currUser.email!!
+                    user.id = currUser.uid
+                }
                 for (site in publicSites)
                     site.visited = user.visitedSites.find { it.id == site.id } != null
                 for (site in privateSites)

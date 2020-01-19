@@ -50,17 +50,6 @@
             app:layout_constraintTop_toBottomOf="@+id/yourAccount" />
 
         <TextView
-            android:id="@+id/userPass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="40dp"
-            android:text="@string/user_pass"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userEmail" />
-
-        <TextView
             android:id="@+id/yourStats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,7 +59,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userPass" />
+            app:layout_constraintTop_toBottomOf="@id/userEmail" />
 
         <TextView
             android:id="@+id/publicSites"

@@ -10,7 +10,6 @@ import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.Location
 import kotlinx.android.synthetic.main.activity_edit_location.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 class EditLocationView : AppCompatActivity(), GoogleMap.OnMarkerDragListener,
     GoogleMap.OnMarkerClickListener, AnkoLogger {

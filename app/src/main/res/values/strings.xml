@@ -24,9 +24,9 @@
     <string name="user_email">Email: %1$s</string>
     <string name="user_pass">Password: %1$s</string>
     <string name="your_stats">Your stats</string>
-    <string name="public_sites">Public sites: %1$i</string>
-    <string name="private_sites">Private sites: %1$i</string>
-    <string name="your_accound">Your accound</string>
-    <string name="visited_sites">Visited sites: %1$i</string>
+    <string name="public_sites">Public sites: %1$d</string>
+    <string name="private_sites">Private sites: %1$d</string>
+    <string name="your_accound">Your account</string>
+    <string name="visited_sites">Visited sites: %1$d</string>
     <string name="site_lists">Site Lists</string>
 </resources>

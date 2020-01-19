@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 
 import dev.aylton.sitemap.R
+import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_account.*
+import org.jetbrains.anko.info
 
 class AccountView : BaseView() {
 
@@ -31,5 +33,12 @@ class AccountView : BaseView() {
         btnSignOut.setOnClickListener { presenter.doSignOut() }
     }
 
+
+    override fun showUserData(user: UserModel, numPublicSites: Int, numPrivateSites: Int){
+        userEmail.text = String.format(resources.getString(R.string.user_email), user.email)
+        publicSites.text = String.format(resources.getString(R.string.public_sites), numPublicSites)
+        privateSites.text = String.format(resources.getString(R.string.private_sites), numPrivateSites)
+        visitedSites.text = String.format(resources.getString(R.string.visited_sites), user.visitedSites.size)
+    }
 
 }
