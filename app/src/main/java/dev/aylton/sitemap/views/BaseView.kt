@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import dev.aylton.sitemap.models.Note
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.views.sitelist.TabsAdapter
@@ -82,4 +83,5 @@ abstract class BaseView : Fragment(), AnkoLogger {
     open fun showSites(sites: List<SiteModel>) {}
     open fun toggleEnable(isEnabled: Boolean) {}
     open fun showUserData(user: UserModel, numPublicSites: Int, numPrivateSites: Int) {}
+    open fun showNotes(notes: ArrayList<Note>){}
 }

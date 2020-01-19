@@ -15,7 +15,8 @@ data class SiteModel(
     var visitedDate: Date = Date(),
     var public: Boolean = false,
     var userId: String = "",
-    var location: Location = Location()
+    var location: Location = Location(),
+    var notes: ArrayList<Note> = ArrayList()
 ) : Parcelable
 
 @Parcelize
@@ -24,3 +25,9 @@ data class Location(
     var lng: Double = 12.0957,
     var zoom: Float = 15f
 ) : Parcelable
+
+@Parcelize
+data class Note(
+    var userId: String = "",
+    var description: String = ""
+): Parcelable

@@ -2,10 +2,7 @@ package dev.aylton.sitemap.views.site
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
 import com.synnapps.carouselview.ImageListener
@@ -35,7 +32,7 @@ class SiteView : BaseView() {
 
         presenter = initPresenter(SitePresenter(this)) as SitePresenter
 
-        init(toolbar, upEnabled = true, optionsMenu = false, title = "Details")
+        init(toolbar, upEnabled = true, optionsMenu = true, title = "Details")
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
@@ -52,6 +49,18 @@ class SiteView : BaseView() {
                 return false
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_site, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_notes -> presenter.navigateToNotes()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun showSite(site: SiteModel) {

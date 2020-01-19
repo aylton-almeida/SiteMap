@@ -22,7 +22,7 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
 
     private var map: GoogleMap? = null
     private val site: SiteModel = view.arguments?.getParcelable("site") ?: SiteModel()
-    private val isEditMode:Boolean = view.arguments!!.getBoolean("isEditMode")
+    val isEditMode:Boolean = view.arguments!!.getBoolean("isEditMode")
 
     init {
         if (isEditMode)

@@ -28,7 +28,7 @@ class EditSiteView : BaseView() {
 
         presenter = initPresenter(EditSitePresenter(this)) as EditSitePresenter
 
-        init(toolbar, upEnabled = true, optionsMenu = true)
+        init(toolbar, upEnabled = true, optionsMenu = false, title = if (presenter.isEditMode) "Edit Site" else "Create Site")
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {

@@ -9,11 +9,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
-import dev.aylton.sitemap.models.VisitedSite
 import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_site.*
-import java.util.*
 
 class SitePresenter(view: BaseView) : BasePresenter(view) {
 
@@ -26,7 +24,7 @@ class SitePresenter(view: BaseView) : BasePresenter(view) {
 
     fun navigateEditSite() {
         val isSitePublic = site.userId == ""
-        view?.findNavController()?.navigate(R.id.action_siteView_to_editSiteView, bundleOf("isEditMode" to true, "site" to site, "isSitePublic" to isSitePublic))
+        view?.findNavController()?.navigate(R.id.action_site_dest_to_editSite_dest, bundleOf("isEditMode" to true, "site" to site, "isSitePublic" to isSitePublic))
     }
 
     fun deleteSite(){
@@ -45,5 +43,9 @@ class SitePresenter(view: BaseView) : BasePresenter(view) {
                 site.location.zoom
             )
         )
+    }
+
+    fun navigateToNotes(){
+        view!!.findNavController().navigate(R.id.action_site_dest_to_notes_dest, bundleOf("site" to site))
     }
 }
