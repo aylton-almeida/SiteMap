@@ -29,4 +29,5 @@
     <string name="your_accound">Your account</string>
     <string name="visited_sites">Visited sites: %1$d</string>
     <string name="site_lists">Site Lists</string>
+    <string name="visited_in">Visited: %1$s</string>
 </resources>

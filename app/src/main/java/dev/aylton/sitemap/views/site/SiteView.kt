@@ -14,6 +14,8 @@ import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter
 import kotlinx.android.synthetic.main.fragment_site.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class SiteView : BaseView() {
@@ -63,8 +65,12 @@ class SiteView : BaseView() {
                     .into(imageView)
             }
 
+        // Update general data
         textName.text = site.name
         textDescription.text = site.description
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMAN)
+        val visitedDate = if (site.visited) dateFormat.format(site.visitedDate) else "No"
+        textVisited.text = String.format(resources.getString(R.string.visited_in), visitedDate)
         carouselView.setImageListener(imageListener)
         carouselView.pageCount = site.images.size
 

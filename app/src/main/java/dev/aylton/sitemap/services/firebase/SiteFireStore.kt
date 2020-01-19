@@ -88,7 +88,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     fun setIsVisited(site: SiteModel, isVisited: Boolean = true) {
         if (isVisited)
             user.visitedSites.add(VisitedSite(site.id, Date()))
-        else user.visitedSites.remove( user.visitedSites.find { it.id == site.id })
+        else user.visitedSites.remove(user.visitedSites.find { it.id == site.id })
         db.collection("users").document(user.id).set(user)
     }
 
@@ -133,10 +133,22 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                     user.email = currUser.email!!
                     user.id = currUser.uid
                 }
-                for (site in publicSites)
-                    site.visited = user.visitedSites.find { it.id == site.id } != null
-                for (site in privateSites)
-                    site.visited = user.visitedSites.find { it.id == site.id } != null
+                for (site in publicSites) {
+                    site.visited = false
+                    val visitedSite = user.visitedSites.find { it.id == site.id }
+                    if (visitedSite != null) {
+                        site.visited = true
+                        site.visitedDate = visitedSite.date!!
+                    }
+                }
+                for (site in privateSites) {
+                    site.visited = false
+                    val visitedSite = user.visitedSites.find { it.id == site.id }
+                    if (visitedSite != null) {
+                        site.visited = true
+                        site.visitedDate = visitedSite.date!!
+                    }
+                }
                 callback()
             } else
                 info { "Current data: null" }

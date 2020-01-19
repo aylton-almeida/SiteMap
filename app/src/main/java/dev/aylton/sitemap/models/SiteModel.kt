@@ -2,6 +2,8 @@ package dev.aylton.sitemap.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Parcelize
 data class SiteModel(
@@ -10,6 +12,7 @@ data class SiteModel(
     var description: String = "",
     var images: ArrayList<String> = ArrayList(),
     var visited: Boolean = false,
+    var visitedDate: Date = Date(),
     var public: Boolean = false,
     var userId: String = "",
     var location: Location = Location()
