@@ -31,6 +31,7 @@ class NotesAdapter(private var notes: List<Note>) : RecyclerView.Adapter<NotesAd
 
         fun bind(note: Note){
             itemView.noteText.text = note.description
+            itemView.emailText.text = note.userEmail
         }
     }
 }

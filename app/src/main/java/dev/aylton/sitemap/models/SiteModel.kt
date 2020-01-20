@@ -29,5 +29,6 @@ data class Location(
 @Parcelize
 data class Note(
     var userId: String = "",
+    var userEmail: String = "",
     var description: String = ""
 ): Parcelable

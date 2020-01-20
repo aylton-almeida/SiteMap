@@ -7,6 +7,7 @@ import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.Note
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_notes.*
+import org.jetbrains.anko.info
 
 class NotesView : BaseView() {
 
@@ -27,10 +28,14 @@ class NotesView : BaseView() {
 
         init(toolbar, upEnabled = true, optionsMenu = false, title = "Notes")
 
-        fab.setOnClickListener { presenter.createNote() }
+        fab.setOnClickListener {
+            presenter.createNote(inputNote.text.toString())
+            inputNote.setText("")
+            recyclerView.adapter?.notifyDataSetChanged()
+        }
     }
 
-    override fun showNotes(notes: ArrayList<Note>){
+    override fun showNotes(notes: ArrayList<Note>) {
         recyclerView.adapter = NotesAdapter(notes)
     }
 }
