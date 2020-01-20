@@ -30,4 +30,6 @@
     <string name="visited_sites">Visited sites: %1$d</string>
     <string name="site_lists">Site Lists</string>
     <string name="visited_in">Visited: %1$s</string>
+    <string name="notes">Notes</string>
+    <string name="insert_a_note">Insert a note…</string>
 </resources>

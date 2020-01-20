@@ -14,9 +14,7 @@ class AccountPresenter(view: BaseView) : BasePresenter(view) {
     }
 
     fun doSignOut(){
-        auth.signOut()
+        fireStore.signOut()
         view?.findNavController()?.navigate(R.id.action_account_dest_to_auth_dest)
     }
-
-
 }

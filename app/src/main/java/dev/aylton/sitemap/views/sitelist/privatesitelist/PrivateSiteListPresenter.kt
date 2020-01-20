@@ -19,7 +19,7 @@ class PrivateSiteListPresenter(view: BaseView) : BasePresenter(view) {
 
     fun navigateSiteView(site: SiteModel) {
         view?.findNavController()
-            ?.navigate(R.id.action_siteListView_to_siteView, bundleOf("site" to site))
+            ?.navigate(R.id.action_siteList_dest_to_site_dest, bundleOf("site" to site))
     }
 
     fun setIsVisited(site: SiteModel, isVisited: Boolean) {
