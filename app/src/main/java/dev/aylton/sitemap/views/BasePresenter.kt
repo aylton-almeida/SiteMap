@@ -1,7 +1,6 @@
 package dev.aylton.sitemap.views
 
 import android.content.Intent
-import com.google.firebase.auth.FirebaseAuth
 import dev.aylton.sitemap.MainApp
 import dev.aylton.sitemap.services.firebase.SiteFireStore
 import org.jetbrains.anko.AnkoLogger
@@ -9,7 +8,6 @@ import org.jetbrains.anko.AnkoLogger
 open class BasePresenter(var view: BaseView?): AnkoLogger {
 
     var app: MainApp = view?.activity?.application as MainApp
-    val auth = FirebaseAuth.getInstance()
     var fireStore: SiteFireStore
 
     init {
@@ -17,7 +15,7 @@ open class BasePresenter(var view: BaseView?): AnkoLogger {
     }
 
     fun hasCurrentUser(): Boolean {
-        return auth.currentUser != null
+        return fireStore.hasCurrentUser()
     }
 
     open fun onDestroy() {

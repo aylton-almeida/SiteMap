@@ -8,9 +8,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dev.aylton.sitemap.helpers.readImageFromPath
 import dev.aylton.sitemap.models.SiteModel
-import dev.aylton.sitemap.services.SiteStore
 import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.models.VisitedSite
+import dev.aylton.sitemap.services.SiteStore
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import java.io.ByteArrayOutputStream
@@ -26,6 +26,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     var user = UserModel()
     private lateinit var db: FirebaseFirestore
     private lateinit var st: StorageReference
+    private lateinit var auth: FirebaseAuth
 
     override fun create(site: SiteModel) {
         site.userId = user.id
@@ -88,16 +89,16 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     fun setIsVisited(site: SiteModel, isVisited: Boolean = true) {
         if (isVisited)
             user.visitedSites.add(VisitedSite(site.id, Date()))
-        else user.visitedSites.remove( user.visitedSites.find { it.id == site.id })
+        else user.visitedSites.remove(user.visitedSites.find { it.id == site.id })
         db.collection("users").document(user.id).set(user)
     }
 
     override fun fetchSites(callback: () -> Unit, isPublic: Boolean) {
-        val currUser = FirebaseAuth.getInstance().currentUser!!
-        user.id = currUser.uid
-        user.email = currUser.email!!
+        auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
         st = FirebaseStorage.getInstance().reference
+        user.id = auth.currentUser!!.uid
+        user.email = auth.currentUser!!.email!!
 
         db.collection("sites").whereEqualTo("public", isPublic)
             .addSnapshotListener { snapshot, e ->
@@ -130,16 +131,61 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
             if (snapshot != null) {
                 if (snapshot.data != null) {
                     user = snapshot.toObject(UserModel::class.java)!!
-                    user.email = currUser.email!!
-                    user.id = currUser.uid
+                    user.email = auth.currentUser!!.email!!
+                    user.id = auth.currentUser!!.uid
                 }
-                for (site in publicSites)
-                    site.visited = user.visitedSites.find { it.id == site.id } != null
-                for (site in privateSites)
-                    site.visited = user.visitedSites.find { it.id == site.id } != null
+                for (site in publicSites) {
+                    site.visited = false
+                    val visitedSite = user.visitedSites.find { it.id == site.id }
+                    if (visitedSite != null) {
+                        site.visited = true
+                        site.visitedDate = visitedSite.date!!
+                    }
+                }
+                for (site in privateSites) {
+                    site.visited = false
+                    val visitedSite = user.visitedSites.find { it.id == site.id }
+                    if (visitedSite != null) {
+                        site.visited = true
+                        site.visitedDate = visitedSite.date!!
+                    }
+                }
                 callback()
             } else
                 info { "Current data: null" }
         }
+    }
+
+    fun createUser(email: String, password: String, successCallback: () -> Unit, errorCallback: (message: String) -> Unit){
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+            if (it.isSuccessful) {
+                db.collection("users").document(auth.currentUser!!.uid).set(UserModel(auth.currentUser!!.uid, email, password))
+                successCallback()
+            }
+            else errorCallback(it.exception?.message!!)
+        }
+    }
+
+    fun loginUser(email: String, password: String, successCallback: () -> Unit, errorCallback: (message: String) -> Unit){
+        auth = FirebaseAuth.getInstance()
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+            if (it.isSuccessful) successCallback()
+            else errorCallback(it.exception?.message!!)
+        }
+    }
+
+    fun signOut(){
+        auth.signOut()
+    }
+
+    fun hasCurrentUser(): Boolean {
+        auth = FirebaseAuth.getInstance()
+        return auth.currentUser != null
+    }
+
+    fun getCurrentUserEmail(): String{
+        return FirebaseAuth.getInstance().currentUser!!.email!!
     }
 }

@@ -29,8 +29,11 @@
     <string name="your_accound">Your account</string>
     <string name="visited_sites">Visited sites: %1$d</string>
     <string name="site_lists">Site Lists</string>
+    <string name="visited_in">Visited: %1$s</string>
+    <string name="notes">Notes</string>
+    <string name="insert_a_note">Insert a note…</string>
 
-    <string name="nav_header_title">Site Map</string>
+    <string name="nav_header_title">Welcome</string>
     <string name="nav_header_subtitle">almeida@aylton.dev</string>
     <string name="nav_header_desc">Navigation header</string>
 

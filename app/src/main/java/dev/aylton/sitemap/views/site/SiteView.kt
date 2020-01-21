@@ -2,10 +2,7 @@ package dev.aylton.sitemap.views.site
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
 import com.synnapps.carouselview.ImageListener
@@ -14,6 +11,8 @@ import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter
 import kotlinx.android.synthetic.main.fragment_site.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class SiteView : BaseView() {
@@ -33,7 +32,7 @@ class SiteView : BaseView() {
 
         presenter = initPresenter(SitePresenter(this)) as SitePresenter
 
-        init(upEnabled = true)
+        init(upEnabled = true, optionsMenu = true)
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
@@ -52,6 +51,18 @@ class SiteView : BaseView() {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_site, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_notes -> presenter.navigateToNotes()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun showSite(site: SiteModel) {
         // Update Images
         val imageListener =
@@ -63,8 +74,12 @@ class SiteView : BaseView() {
                     .into(imageView)
             }
 
+        // Update general data
         textName.text = site.name
         textDescription.text = site.description
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMAN)
+        val visitedDate = if (site.visited) dateFormat.format(site.visitedDate) else "No"
+        textVisited.text = String.format(resources.getString(R.string.visited_in), visitedDate)
         carouselView.setImageListener(imageListener)
         carouselView.pageCount = site.images.size
 

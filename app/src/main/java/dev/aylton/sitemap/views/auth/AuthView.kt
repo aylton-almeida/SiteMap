@@ -59,7 +59,7 @@ class AuthView : BaseView() {
     override fun toggleEnable(isEnabled: Boolean){
         btnSignUp.isEnabled = isEnabled
         btnSignIn.isEnabled = isEnabled
-        textLayoutEmail.isEnabled = isEnabled
+        textLayoutNote.isEnabled = isEnabled
         textLayoutPass.isEnabled = isEnabled
     }
 }

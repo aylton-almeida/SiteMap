@@ -27,14 +27,13 @@ class AccountView : BaseView() {
 
         presenter = initPresenter(AccountPresenter(this)) as AccountPresenter
 
-        init(upEnabled = true)
-
-        btnSignOut.setOnClickListener { presenter.doSignOut() }
+        init(upEnabled = true, optionsMenu = false)
     }
 
 
     override fun showUserData(user: UserModel, numPublicSites: Int, numPrivateSites: Int){
         userEmail.text = String.format(resources.getString(R.string.user_email), user.email)
+        userPass.text = String.format(resources.getString(R.string.user_pass), user.password)
         publicSites.text = String.format(resources.getString(R.string.public_sites), numPublicSites)
         privateSites.text = String.format(resources.getString(R.string.private_sites), numPrivateSites)
         visitedSites.text = String.format(resources.getString(R.string.visited_sites), user.visitedSites.size)

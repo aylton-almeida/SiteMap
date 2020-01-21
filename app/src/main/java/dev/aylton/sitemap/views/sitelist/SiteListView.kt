@@ -1,7 +1,9 @@
 package dev.aylton.sitemap.views.sitelist
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.views.BaseView
@@ -26,17 +28,7 @@ class SiteListView : BaseView() {
         presenter = initPresenter(SiteListPresenter(this)) as SiteListPresenter
 
         initTabs(viewPager, (activity as AppCompatActivity?)!!.tabs)
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_list, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_settings -> presenter.navigateAccountView()
-        }
-        return super.onOptionsItemSelected(item)
     }
 }
