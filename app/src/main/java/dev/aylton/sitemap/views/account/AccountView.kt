@@ -10,7 +10,6 @@ import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_account.*
-import org.jetbrains.anko.info
 
 class AccountView : BaseView() {
 
@@ -28,7 +27,7 @@ class AccountView : BaseView() {
 
         presenter = initPresenter(AccountPresenter(this)) as AccountPresenter
 
-        init(toolbar, upEnabled = true, optionsMenu = false, title = "Account")
+        init(upEnabled = true)
 
         btnSignOut.setOnClickListener { presenter.doSignOut() }
     }

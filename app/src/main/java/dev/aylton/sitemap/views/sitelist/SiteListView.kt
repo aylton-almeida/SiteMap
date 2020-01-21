@@ -2,9 +2,12 @@ package dev.aylton.sitemap.views.sitelist
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.views.BaseView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_site_list.*
+
 
 class SiteListView : BaseView() {
 
@@ -22,9 +25,7 @@ class SiteListView : BaseView() {
 
         presenter = initPresenter(SiteListPresenter(this)) as SiteListPresenter
 
-        init(toolbar, upEnabled = false, optionsMenu = true)
-
-        initTabs(viewPager, tabs)
+        initTabs(viewPager, (activity as AppCompatActivity?)!!.tabs)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
