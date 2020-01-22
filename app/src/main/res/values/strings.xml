@@ -32,4 +32,11 @@
     <string name="visited_in">Visited: %1$s</string>
     <string name="notes">Notes</string>
     <string name="insert_a_note">Insert a note…</string>
+
+    <string name="nav_header_title">Welcome</string>
+    <string name="nav_header_subtitle">almeida@aylton.dev</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="favorites">Favorites</string>
+    <string name="sites_map">Sites Map</string>
 </resources>

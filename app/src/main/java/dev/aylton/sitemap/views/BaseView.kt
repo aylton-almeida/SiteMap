@@ -4,7 +4,6 @@ import android.content.Intent
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
@@ -23,13 +22,8 @@ const val LOCATION_REQUEST = 2
 abstract class BaseView : Fragment(), AnkoLogger {
     private var basePresenter: BasePresenter? = null
 
-    fun init(toolbar: Toolbar, upEnabled: Boolean, optionsMenu: Boolean, title: String = "") {
+    fun init(upEnabled: Boolean, optionsMenu: Boolean) {
         val act = activity as AppCompatActivity
-        if (title == "")
-            toolbar.title = act.title
-        else
-            toolbar.title = title
-        act.setSupportActionBar(toolbar)
         setHasOptionsMenu(optionsMenu)
         act.supportActionBar?.setDisplayHomeAsUpEnabled(upEnabled)
         act.supportActionBar?.setDisplayShowHomeEnabled(upEnabled)

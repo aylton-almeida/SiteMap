@@ -2,12 +2,13 @@ package dev.aylton.sitemap.views.notes
 
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.Note
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_notes.*
-import org.jetbrains.anko.info
 
 class NotesView : BaseView() {
 
@@ -26,7 +27,7 @@ class NotesView : BaseView() {
 
         presenter = initPresenter(NotesPresenter(this)) as NotesPresenter
 
-        init(toolbar, upEnabled = true, optionsMenu = false, title = "Notes")
+        init(upEnabled = true, optionsMenu = false)
 
         fab.setOnClickListener {
             presenter.createNote(inputNote.text.toString())

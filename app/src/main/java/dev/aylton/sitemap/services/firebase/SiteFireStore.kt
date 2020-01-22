@@ -8,9 +8,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dev.aylton.sitemap.helpers.readImageFromPath
 import dev.aylton.sitemap.models.SiteModel
-import dev.aylton.sitemap.services.SiteStore
 import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.models.VisitedSite
+import dev.aylton.sitemap.services.SiteStore
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import java.io.ByteArrayOutputStream
@@ -178,5 +178,14 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
 
     fun signOut(){
         auth.signOut()
+    }
+
+    fun hasCurrentUser(): Boolean {
+        auth = FirebaseAuth.getInstance()
+        return auth.currentUser != null
+    }
+
+    fun getCurrentUserEmail(): String{
+        return FirebaseAuth.getInstance().currentUser!!.email!!
     }
 }

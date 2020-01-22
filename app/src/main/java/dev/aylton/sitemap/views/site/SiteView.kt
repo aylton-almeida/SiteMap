@@ -32,7 +32,7 @@ class SiteView : BaseView() {
 
         presenter = initPresenter(SitePresenter(this)) as SitePresenter
 
-        init(toolbar, upEnabled = true, optionsMenu = true, title = "Details")
+        init(upEnabled = true, optionsMenu = true)
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {

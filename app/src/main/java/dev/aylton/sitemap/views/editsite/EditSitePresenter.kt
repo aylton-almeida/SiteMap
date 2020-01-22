@@ -15,8 +15,6 @@ import dev.aylton.sitemap.views.BaseView
 import dev.aylton.sitemap.views.IMAGE_REQUEST
 import dev.aylton.sitemap.views.LOCATION_REQUEST
 import dev.aylton.sitemap.views.editlocation.EditLocationView
-import kotlinx.android.synthetic.main.fragment_private_site_list.*
-import org.jetbrains.anko.info
 
 class EditSitePresenter(view: BaseView) : BasePresenter(view) {
 

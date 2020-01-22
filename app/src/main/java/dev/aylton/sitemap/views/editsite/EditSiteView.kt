@@ -2,7 +2,9 @@ package dev.aylton.sitemap.views.editsite
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
@@ -28,7 +30,7 @@ class EditSiteView : BaseView() {
 
         presenter = initPresenter(EditSitePresenter(this)) as EditSitePresenter
 
-        init(toolbar, upEnabled = true, optionsMenu = false, title = if (presenter.isEditMode) "Edit Site" else "Create Site")
+        init(upEnabled = true, optionsMenu = false)
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {

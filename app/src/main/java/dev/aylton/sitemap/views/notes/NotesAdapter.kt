@@ -8,7 +8,6 @@ import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.Note
 import kotlinx.android.synthetic.main.card_note.view.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 class NotesAdapter(private var notes: List<Note>) : RecyclerView.Adapter<NotesAdapter.ViewHolder>(),
     AnkoLogger {

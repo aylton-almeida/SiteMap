@@ -2,7 +2,6 @@ package dev.aylton.sitemap.views.auth
 
 import android.graphics.Color
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.helpers.hideKeyboard
 import dev.aylton.sitemap.views.BasePresenter
