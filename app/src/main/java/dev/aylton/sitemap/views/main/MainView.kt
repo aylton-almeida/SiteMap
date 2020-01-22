@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -29,13 +30,14 @@ class MainView : AppCompatActivity(), AnkoLogger {
 
         setSupportActionBar(toolbar)
 
-        val navController = findNavController(R.id.navHostFragment)
+        val navController = navHostFragment.findNavController()
 
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.siteList_dest, R.id.favorites_dest, R.id.sitesMap_dest), drawerLayout
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+
         navView.setupWithNavController(navController)
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
