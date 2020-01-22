@@ -1,16 +1,15 @@
 package dev.aylton.sitemap.views.editlocation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.Location
 import kotlinx.android.synthetic.main.activity_edit_location.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 class EditLocationView : AppCompatActivity(), GoogleMap.OnMarkerDragListener,
     GoogleMap.OnMarkerClickListener, AnkoLogger {

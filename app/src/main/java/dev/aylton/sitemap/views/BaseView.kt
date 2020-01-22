@@ -4,13 +4,14 @@ import android.content.Intent
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import dev.aylton.sitemap.models.Note
 import dev.aylton.sitemap.models.SiteModel
+import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.views.sitelist.TabsAdapter
 import org.jetbrains.anko.AnkoLogger
 
@@ -21,13 +22,8 @@ const val LOCATION_REQUEST = 2
 abstract class BaseView : Fragment(), AnkoLogger {
     private var basePresenter: BasePresenter? = null
 
-    fun init(toolbar: Toolbar, upEnabled: Boolean, optionsMenu: Boolean, title: String = "") {
+    fun init(upEnabled: Boolean, optionsMenu: Boolean) {
         val act = activity as AppCompatActivity
-        if (title == "")
-            toolbar.title = act.title
-        else
-            toolbar.title = title
-        act.setSupportActionBar(toolbar)
         setHasOptionsMenu(optionsMenu)
         act.supportActionBar?.setDisplayHomeAsUpEnabled(upEnabled)
         act.supportActionBar?.setDisplayShowHomeEnabled(upEnabled)
@@ -80,4 +76,6 @@ abstract class BaseView : Fragment(), AnkoLogger {
     open fun showSite(site: SiteModel) {}
     open fun showSites(sites: List<SiteModel>) {}
     open fun toggleEnable(isEnabled: Boolean) {}
+    open fun showUserData(user: UserModel, numPublicSites: Int, numPrivateSites: Int) {}
+    open fun showNotes(notes: ArrayList<Note>){}
 }

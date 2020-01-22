@@ -7,10 +7,10 @@
     <fragment
         android:id="@+id/siteList_dest"
         android:name="dev.aylton.sitemap.views.sitelist.SiteListView"
-        android:label="fragment_site_list"
+        android:label="Site List"
         tools:layout="@layout/fragment_site_list">
         <action
-            android:id="@+id/action_siteListView_to_siteView"
+            android:id="@+id/action_siteList_dest_to_site_dest"
             app:destination="@id/site_dest"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/fade_out"
@@ -28,21 +28,11 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_down"
             app:popUpTo="@+id/siteList_dest" />
-        <action
-            android:id="@+id/action_siteList_dest_to_account_dest"
-            app:destination="@id/account_dest"
-            app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/fade_out"
-            app:launchSingleTop="true"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_down"
-            app:popUpTo="@+id/siteList_dest"
-            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/editSite_dest"
         android:name="dev.aylton.sitemap.views.editsite.EditSiteView"
-        android:label="fragment_edit_site"
+        android:label="Edit Site"
         tools:layout="@layout/fragment_edit_site" >
         <argument
             android:name="isEditMode"
@@ -56,10 +46,10 @@
     <fragment
         android:id="@+id/site_dest"
         android:name="dev.aylton.sitemap.views.site.SiteView"
-        android:label="fragment_site"
+        android:label="Details"
         tools:layout="@layout/fragment_site">
         <action
-            android:id="@+id/action_siteView_to_editSiteView"
+            android:id="@+id/action_site_dest_to_editSite_dest"
             app:destination="@id/editSite_dest"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/fade_out"
@@ -70,11 +60,18 @@
         <argument
             android:name="site"
             app:argType="dev.aylton.sitemap.models.SiteModel" />
+        <action
+            android:id="@+id/action_site_dest_to_notes_dest"
+            app:destination="@id/notes_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/auth_dest"
         android:name="dev.aylton.sitemap.views.auth.AuthView"
-        android:label="fragment_auth"
+        android:label="Authentication"
         tools:layout="@layout/fragment_auth">
         <action
             android:id="@+id/action_signUp_dest_to_siteList_dest"
@@ -88,15 +85,25 @@
     <fragment
         android:id="@+id/account_dest"
         android:name="dev.aylton.sitemap.views.account.AccountView"
-        android:label="fragment_account"
-        tools:layout="@layout/fragment_account" >
-        <action
-            android:id="@+id/action_account_dest_to_auth_dest"
-            app:destination="@id/auth_dest"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/slide_down"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/nav_graph"
-            app:popUpToInclusive="true" />
+        android:label="Account"
+        tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/favorites_dest"
+        android:name="dev.aylton.sitemap.views.favorites.FavoritesView"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/sitesMap_dest"
+        android:name="dev.aylton.sitemap.views.sitesMap.SitesMapView"
+        android:label="Sites Map"
+        tools:layout="@layout/fragment_sites_map" />
+    <fragment
+        android:id="@+id/notes_dest"
+        android:name="dev.aylton.sitemap.views.notes.NotesView"
+        android:label="Notes"
+        tools:layout="@layout/fragment_notes">
+        <argument
+            android:name="site"
+            app:argType="dev.aylton.sitemap.models.SiteModel" />
     </fragment>
 </navigation>

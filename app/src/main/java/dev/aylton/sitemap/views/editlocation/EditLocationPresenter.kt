@@ -1,15 +1,12 @@
 package dev.aylton.sitemap.views.editlocation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.Location
-import kotlinx.android.synthetic.main.activity_edit_location.*
 
 class EditLocationPresenter(val view: EditLocationView) {
 
