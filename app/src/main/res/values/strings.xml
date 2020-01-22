@@ -39,4 +39,5 @@
 
     <string name="favorites">Favorites</string>
     <string name="sites_map">Sites Map</string>
+    <string name="user_image">User Image</string>
 </resources>

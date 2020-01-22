@@ -156,6 +156,22 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         }
     }
 
+    fun getAllSites(callback: (sitesList: ArrayList<SiteModel>)-> Unit){
+        val sitesList = ArrayList<SiteModel>()
+        db.collection("sites").get()
+            .addOnSuccessListener {querySnapshot ->
+                for (doc in querySnapshot.documents){
+                    val newSite = doc.toObject(SiteModel::class.java)!!
+                    if (newSite.public)
+                        sitesList.add(newSite)
+                    else
+                        if (newSite.userId == user.id)
+                            sitesList.add(newSite)
+                }
+                callback(sitesList)
+            }
+    }
+
     fun createUser(email: String, password: String, successCallback: () -> Unit, errorCallback: (message: String) -> Unit){
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
