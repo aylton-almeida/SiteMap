@@ -10,7 +10,7 @@ import dev.aylton.sitemap.views.BaseView
 class PrivateSiteListPresenter(view: BaseView) : BasePresenter(view) {
 
     init {
-        fireStore.fetchSites({ loadSites() }, false)
+        fireStore.addLoadSitesFunction({ loadSites() }, "private")
     }
 
     private fun loadSites() {
@@ -27,6 +27,7 @@ class PrivateSiteListPresenter(view: BaseView) : BasePresenter(view) {
     }
 
     fun navigateEditSiteView() {
-        view?.findNavController()?.navigate(R.id.action_siteList_dest_to_editSite_dest, bundleOf("isEditMode" to false))
+        view?.findNavController()
+            ?.navigate(R.id.action_siteList_dest_to_editSite_dest, bundleOf("isEditMode" to false))
     }
 }

@@ -16,8 +16,17 @@ data class SiteModel(
     var public: Boolean = false,
     var userId: String = "",
     var location: Location = Location(),
-    var notes: ArrayList<Note> = ArrayList()
-) : Parcelable
+    var notes: ArrayList<Note> = ArrayList(),
+    var rating: ArrayList<Rating> = ArrayList()
+) : Parcelable {
+    fun getLikes(): Long{
+        return rating.stream().filter{it.positive}.count()
+    }
+
+    fun getDislikes(): Long{
+        return rating.stream().filter{!it.positive}.count()
+    }
+}
 
 @Parcelize
 data class Location(
@@ -31,4 +40,10 @@ data class Note(
     var userId: String = "",
     var userEmail: String = "",
     var description: String = ""
-): Parcelable
+) : Parcelable
+
+@Parcelize
+data class Rating(
+    var positive: Boolean = false,
+    var userId: String = ""
+) : Parcelable

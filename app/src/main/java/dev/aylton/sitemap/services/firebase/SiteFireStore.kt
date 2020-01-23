@@ -24,6 +24,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
     val publicSites = ArrayList<SiteModel>()
     val privateSites = ArrayList<SiteModel>()
     var user = UserModel()
+    private val loadSitesFunctions: MutableMap<String, () -> Unit> = mutableMapOf()
     private lateinit var db: FirebaseFirestore
     private lateinit var st: StorageReference
     private lateinit var auth: FirebaseAuth
@@ -93,31 +94,40 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         db.collection("users").document(user.id).set(user)
     }
 
-    override fun fetchSites(callback: () -> Unit, isPublic: Boolean) {
+    fun addLoadSitesFunction(callback: () -> Unit, local: String) {
+        callback()
+        loadSitesFunctions[local] = callback
+    }
+
+    override fun fetchSites() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
         st = FirebaseStorage.getInstance().reference
         user.id = auth.currentUser!!.uid
         user.email = auth.currentUser!!.email!!
 
-        db.collection("sites").whereEqualTo("public", isPublic)
+        db.collection("sites")
             .addSnapshotListener { snapshot, e ->
-                if (isPublic) publicSites.clear() else privateSites.clear()
                 if (e != null) {
                     info("Listen Failed: $e")
                     return@addSnapshotListener
+                } else {
+                    publicSites.clear()
+                    privateSites.clear()
                 }
                 if (snapshot != null) {
                     for (doc in snapshot.documents) {
                         val newSite = doc.toObject(SiteModel::class.java)!!
                         if (user.visitedSites.find { it.id == newSite.id } != null)
                             newSite.visited = true
-                        if (isPublic) publicSites.add(newSite)
+                        if (newSite.public)
+                            publicSites.add(newSite)
                         else
                             if (newSite.userId == user.id)
                                 privateSites.add(newSite)
                     }
-                    callback()
+                    for ((_, item) in loadSitesFunctions)
+                        item()
                 } else {
                     info("Current data: null")
                 }
@@ -150,41 +160,36 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                         site.visitedDate = visitedSite.date!!
                     }
                 }
-                callback()
+                for ((_, item) in loadSitesFunctions)
+                    item()
             } else
                 info { "Current data: null" }
         }
     }
 
-    fun getAllSites(callback: (sitesList: ArrayList<SiteModel>)-> Unit){
-        val sitesList = ArrayList<SiteModel>()
-        db.collection("sites").get()
-            .addOnSuccessListener {querySnapshot ->
-                for (doc in querySnapshot.documents){
-                    val newSite = doc.toObject(SiteModel::class.java)!!
-                    if (newSite.public)
-                        sitesList.add(newSite)
-                    else
-                        if (newSite.userId == user.id)
-                            sitesList.add(newSite)
-                }
-                callback(sitesList)
-            }
-    }
-
-    fun createUser(email: String, password: String, successCallback: () -> Unit, errorCallback: (message: String) -> Unit){
+    fun createUser(
+        email: String,
+        password: String,
+        successCallback: () -> Unit,
+        errorCallback: (message: String) -> Unit
+    ) {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
-                db.collection("users").document(auth.currentUser!!.uid).set(UserModel(auth.currentUser!!.uid, email, password))
+                db.collection("users").document(auth.currentUser!!.uid)
+                    .set(UserModel(auth.currentUser!!.uid, email, password))
                 successCallback()
-            }
-            else errorCallback(it.exception?.message!!)
+            } else errorCallback(it.exception?.message!!)
         }
     }
 
-    fun loginUser(email: String, password: String, successCallback: () -> Unit, errorCallback: (message: String) -> Unit){
+    fun loginUser(
+        email: String,
+        password: String,
+        successCallback: () -> Unit,
+        errorCallback: (message: String) -> Unit
+    ) {
         auth = FirebaseAuth.getInstance()
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) successCallback()
@@ -192,7 +197,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         }
     }
 
-    fun signOut(){
+    fun signOut() {
         auth.signOut()
     }
 
@@ -201,7 +206,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         return auth.currentUser != null
     }
 
-    fun getCurrentUserEmail(): String{
+    fun getCurrentUserEmail(): String {
         return FirebaseAuth.getInstance().currentUser!!.email!!
     }
 }
