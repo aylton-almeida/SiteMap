@@ -15,7 +15,7 @@ Android App for displaying and manage Archaeological Sites
                     }
                 }
     * Any doubts, consult the oficial documentation: https://firebase.google.com/docs/android/setup?authuser=0
-* Access your google cloud project and activate the Maps SDK for Android API. Create a file google_maps_api.xml inside src>debug>res>values and add the following:
+* Access your google cloud project and activate the Maps SDK for Android API. Create a file "google_maps_api.xml" inside src>debug>res>values and add the following:
 
          <?xml version="1.0" encoding="utf-8"?>
             <resources>
