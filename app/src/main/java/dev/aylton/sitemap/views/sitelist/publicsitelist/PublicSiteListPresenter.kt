@@ -10,7 +10,7 @@ import dev.aylton.sitemap.views.BaseView
 class PublicSiteListPresenter(view: BaseView) : BasePresenter(view) {
 
     init {
-        fireStore.fetchSites({loadSites()}, true)
+        fireStore.addLoadSitesFunction({ loadSites() }, "public")
     }
 
     private fun loadSites() {

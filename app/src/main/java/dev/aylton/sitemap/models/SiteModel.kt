@@ -16,7 +16,8 @@ data class SiteModel(
     var public: Boolean = false,
     var userId: String = "",
     var location: Location = Location(),
-    var notes: ArrayList<Note> = ArrayList()
+    var notes: ArrayList<Note> = ArrayList(),
+    var rating: ArrayList<Rating> = ArrayList()
 ) : Parcelable
 
 @Parcelize
@@ -31,4 +32,10 @@ data class Note(
     var userId: String = "",
     var userEmail: String = "",
     var description: String = ""
+): Parcelable
+
+@Parcelize
+data class Rating(
+    var positive: Boolean = false,
+    var userId: String = ""
 ): Parcelable

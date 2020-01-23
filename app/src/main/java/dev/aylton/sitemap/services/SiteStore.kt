@@ -6,5 +6,5 @@ interface SiteStore {
     fun create(site: SiteModel)
     fun update(site: SiteModel)
     fun delete(site: SiteModel)
-    fun fetchSites(callback: () -> Unit, isPublic: Boolean)
+    fun fetchSites()
 }

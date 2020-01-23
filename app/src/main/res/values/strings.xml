@@ -40,4 +40,7 @@
     <string name="favorites">Favorites</string>
     <string name="sites_map">Sites Map</string>
     <string name="user_image">User Image</string>
+    <string name="image_site">image site</string>
+    <string name="thumbs_up_icon">thumbs up icon</string>
+    <string name="thumbs_down_icon">thumbs down icon</string>
 </resources>
