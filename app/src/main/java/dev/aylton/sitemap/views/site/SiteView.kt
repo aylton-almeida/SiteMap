@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.fragment_site.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class SiteView : BaseView() {
 
     private lateinit var presenter: SitePresenter

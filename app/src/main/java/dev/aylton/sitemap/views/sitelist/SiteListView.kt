@@ -28,7 +28,5 @@ class SiteListView : BaseView() {
         presenter = initPresenter(SiteListPresenter(this)) as SiteListPresenter
 
         initTabs(viewPager, (activity as AppCompatActivity?)!!.tabs)
-
-
     }
 }
