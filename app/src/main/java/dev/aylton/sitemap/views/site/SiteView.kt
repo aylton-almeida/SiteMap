@@ -12,8 +12,6 @@ import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.views.BaseView
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter
 import kotlinx.android.synthetic.main.fragment_site.*
-import kotlinx.android.synthetic.main.nav_header_main.*
-import org.jetbrains.anko.info
 import java.text.SimpleDateFormat
 import java.util.*
 

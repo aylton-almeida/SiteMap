@@ -1,26 +1,24 @@
 package dev.aylton.sitemap.views.editsite
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import dev.aylton.sitemap.helpers.showImagePicker
+import dev.aylton.sitemap.helpers.*
 import dev.aylton.sitemap.models.Location
 import dev.aylton.sitemap.models.SiteModel
-import dev.aylton.sitemap.views.BasePresenter
-import dev.aylton.sitemap.views.BaseView
-import dev.aylton.sitemap.views.IMAGE_REQUEST
-import dev.aylton.sitemap.views.LOCATION_REQUEST
+import dev.aylton.sitemap.views.*
 import dev.aylton.sitemap.views.editlocation.EditLocationView
 
 class EditSitePresenter(view: BaseView) : BasePresenter(view) {
 
     private var map: GoogleMap? = null
     private val site: SiteModel = view.arguments?.getParcelable("site") ?: SiteModel()
-    val isEditMode:Boolean = view.arguments!!.getBoolean("isEditMode")
+    private val isEditMode: Boolean = view.arguments!!.getBoolean("isEditMode")
 
     init {
         if (isEditMode)
@@ -50,14 +48,20 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
     }
 
     fun saveSite() {
+        hideKeyboard(view?.activity)
         if (isEditMode) fireStore.update(site)
         else fireStore.create(site)
         view?.findNavController()?.popBackStack()
     }
 
     fun doSelectImage() {
-        if (site.images.size < 4) showImagePicker(view!!, IMAGE_REQUEST)
-        else view?.showSnackbar("You can only add up to 4 images", Color.RED)
+        if (site.images.size < 4) {
+            if (checkCameraPermission(view!!)) showImageDialog(
+                view!!,
+                LOCAL_IMAGE_REQUEST,
+                CAMERA_IMAGE_REQUEST
+            )
+        } else view?.showSnackbar("You can only add up to 4 images", Color.RED)
     }
 
     fun doChangeLocation() {
@@ -68,8 +72,14 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
 
     override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         when (requestCode) {
-            IMAGE_REQUEST -> {
-                val image = data.data.toString()
+            LOCAL_IMAGE_REQUEST -> {
+                val image = data.dataString
+                if (!site.images.contains(image))
+                    site.images.add(image!!)
+                view?.showSite(site)
+            }
+            CAMERA_IMAGE_REQUEST -> {
+                val image = getBitmapImageURI(view!!, data.extras?.get("data") as Bitmap).toString()
                 if (!site.images.contains(image))
                     site.images.add(image)
                 view?.showSite(site)
@@ -82,11 +92,23 @@ class EditSitePresenter(view: BaseView) : BasePresenter(view) {
         }
     }
 
-    fun updateName(name: String){
+    override fun doRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (isPermissionGranted(requestCode, grantResults)) showImageDialog(
+            view!!,
+            LOCAL_IMAGE_REQUEST,
+            CAMERA_IMAGE_REQUEST
+        ) else showImagePicker(view!!, LOCAL_IMAGE_REQUEST)
+    }
+
+    fun updateName(name: String) {
         site.name = name
     }
 
-    fun updateDescription(description: String){
+    fun updateDescription(description: String) {
         site.description = description
     }
 

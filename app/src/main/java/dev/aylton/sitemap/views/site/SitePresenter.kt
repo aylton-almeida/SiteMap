@@ -10,7 +10,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.Rating
 import dev.aylton.sitemap.models.SiteModel
-import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_site.*
