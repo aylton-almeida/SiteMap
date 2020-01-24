@@ -85,6 +85,7 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         db.collection("sites").document(site.id).delete()
         st.child("sites/${site.id}").delete()
         setIsVisited(site, false)
+        setFavourite(site, false)
     }
 
     fun setIsVisited(site: SiteModel, isVisited: Boolean = true) {
