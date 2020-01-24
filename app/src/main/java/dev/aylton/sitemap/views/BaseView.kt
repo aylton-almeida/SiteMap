@@ -75,6 +75,7 @@ abstract class BaseView : Fragment(), AnkoLogger {
 
     open fun showSite(site: SiteModel) {}
     open fun showSites(sites: List<SiteModel>) {}
+    open fun showSiteWithUser(site: SiteModel, user: UserModel) {}
     open fun toggleEnable(isEnabled: Boolean) {}
     open fun showUserData(user: UserModel, numPublicSites: Int, numPrivateSites: Int) {}
     open fun showNotes(notes: ArrayList<Note>){}

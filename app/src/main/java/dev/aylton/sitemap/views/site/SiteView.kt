@@ -8,9 +8,12 @@ import com.google.android.gms.maps.GoogleMap
 import com.synnapps.carouselview.ImageListener
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
+import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.views.BaseView
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter
 import kotlinx.android.synthetic.main.fragment_site.*
+import kotlinx.android.synthetic.main.nav_header_main.*
+import org.jetbrains.anko.info
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -62,7 +65,7 @@ class SiteView : BaseView() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun showSite(site: SiteModel) {
+    override fun showSiteWithUser(site: SiteModel, user: UserModel) {
         // Update Images
         val imageListener =
             ImageListener { position, imageView ->
@@ -81,6 +84,32 @@ class SiteView : BaseView() {
         textVisited.text = String.format(resources.getString(R.string.visited_in), visitedDate)
         carouselView.setImageListener(imageListener)
         carouselView.pageCount = site.images.size
+
+        // Rating system
+        if (site.rating.any { it.positive && it.userId == user.id }) {
+            imageViewThumbsUp.setImageDrawable(context?.getDrawable(R.drawable.ic_thumb_up))
+            imageViewThumbsUp.setOnClickListener {
+                presenter.removeRating(true)
+            }
+        } else{
+            imageViewThumbsUp.setImageDrawable(context?.getDrawable(R.drawable.ic_thumb_up_outlined))
+            imageViewThumbsUp.setOnClickListener {
+                presenter.addRating(true)
+            }
+        }
+        if (site.rating.any { !it.positive && it.userId == user.id }) {
+            imageViewThumbsDown.setImageDrawable(context?.getDrawable(R.drawable.ic_thumb_down))
+            imageViewThumbsDown.setOnClickListener {
+                presenter.removeRating(false)
+            }
+        } else {
+            imageViewThumbsDown.setImageDrawable(context?.getDrawable(R.drawable.ic_thumb_down_outlined))
+            imageViewThumbsDown.setOnClickListener {
+                presenter.addRating(false)
+            }
+        }
+        valueLikes.text = site.getLikes().toString()
+        valueDislikes.text = site.getDislikes().toString()
 
         // Update location
         textLat.text = String.format(resources.getString(R.string.latitude), site.location.lat)
