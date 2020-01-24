@@ -94,6 +94,13 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         db.collection("users").document(user.id).set(user)
     }
 
+    fun setFavourite(site: SiteModel, isFavourite: Boolean = true) {
+        if (isFavourite)
+            user.favourites.add(site.id)
+        else user.favourites.remove(site.id)
+        db.collection("users").document(user.id).set(user)
+    }
+
     fun addLoadSitesFunction(callback: () -> Unit, local: String) {
         callback()
         loadSitesFunctions[local] = callback

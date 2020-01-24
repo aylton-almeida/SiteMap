@@ -88,10 +88,21 @@
         android:label="Account"
         tools:layout="@layout/fragment_account" />
     <fragment
-        android:id="@+id/favorites_dest"
-        android:name="dev.aylton.sitemap.views.favorites.FavoritesView"
-        android:label="Favorites"
-        tools:layout="@layout/fragment_favorites" />
+        android:id="@+id/favourites_dest"
+        android:name="dev.aylton.sitemap.views.favorites.FavouritesView"
+        android:label="Favourites"
+        tools:layout="@layout/fragment_favourites" >
+        <action
+            android:id="@+id/action_favourites_dest_to_site_dest"
+            app:destination="@id/site_dest"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"
+            app:popUpTo="@+id/favourites_dest"
+            app:popUpToInclusive="false" />
+    </fragment>
     <fragment
         android:id="@+id/sitesMap_dest"
         android:name="dev.aylton.sitemap.views.sitesMap.SitesMapView"

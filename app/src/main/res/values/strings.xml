@@ -37,7 +37,7 @@
     <string name="nav_header_subtitle">almeida@aylton.dev</string>
     <string name="nav_header_desc">Navigation header</string>
 
-    <string name="favorites">Favorites</string>
+    <string name="favourites">Favourites</string>
     <string name="sites_map">Sites Map</string>
     <string name="user_image">User Image</string>
     <string name="image_site">image site</string>

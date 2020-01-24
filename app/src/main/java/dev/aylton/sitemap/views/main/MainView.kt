@@ -33,7 +33,7 @@ class MainView : AppCompatActivity(), AnkoLogger {
         val navController = navHostFragment.findNavController()
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.siteList_dest, R.id.favorites_dest, R.id.sitesMap_dest), drawerLayout
+            setOf(R.id.siteList_dest, R.id.favourites_dest, R.id.sitesMap_dest), drawerLayout
         )
 
         navView.setupWithNavController(navController)
