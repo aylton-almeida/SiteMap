@@ -9,11 +9,12 @@ import android.view.ViewGroup
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BaseView
-import dev.aylton.sitemap.views.sitelist.SiteListAdapter
-import dev.aylton.sitemap.views.sitelist.SiteListener
+import dev.aylton.sitemap.adapters.SiteListAdapter
+import dev.aylton.sitemap.adapters.SiteListener
 import kotlinx.android.synthetic.main.fragment_private_site_list.*
 
-class PrivateSiteListView : BaseView(), SiteListener {
+class PrivateSiteListView : BaseView(),
+    SiteListener {
 
     lateinit var presenter: PrivateSiteListPresenter
 

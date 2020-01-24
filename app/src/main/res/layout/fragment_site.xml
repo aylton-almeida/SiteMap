@@ -45,6 +45,72 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/carouselView" />
 
+                <ImageView
+                    android:id="@+id/imageViewFavourite"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="14dp"
+                    android:contentDescription="@string/icon_favourite"
+                    android:src="@drawable/ic_star_outlined"
+                    android:tint="#ffeb3b"
+                    app:layout_constraintBottom_toBottomOf="@id/textName"
+                    app:layout_constraintStart_toEndOf="@id/textName"
+                    app:layout_constraintTop_toTopOf="@id/textName" />
+
+                <ImageView
+                    android:id="@+id/imageViewThumbsUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="@string/thumbs_up_icon"
+                    android:src="@drawable/ic_thumb_up_outlined"
+                    android:tint="@color/colorPrimary"
+                    app:layout_constraintEnd_toStartOf="@id/valueLikes"
+                    app:layout_constraintTop_toBottomOf="@id/textName" />
+
+                <TextView
+                    android:id="@+id/valueLikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/imageViewThumbsUp"
+                    app:layout_constraintEnd_toStartOf="@id/imageViewThumbsDown"
+                    app:layout_constraintTop_toTopOf="@id/imageViewThumbsUp" />
+
+                <ImageView
+                    android:id="@+id/imageViewThumbsDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="@string/thumbs_down_icon"
+                    android:src="@drawable/ic_thumb_down_outlined"
+                    android:tint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="@id/imageViewThumbsUp"
+                    app:layout_constraintEnd_toStartOf="@id/valueDislikes"
+                    app:layout_constraintTop_toTopOf="@id/imageViewThumbsUp" />
+
+                <TextView
+                    android:id="@+id/valueDislikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="18dp"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@id/imageViewThumbsDown"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/imageViewThumbsDown" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageViewThumbsUp" />
+
                 <TextView
                     android:id="@+id/textDescription"
                     android:layout_width="wrap_content"
@@ -54,7 +120,7 @@
                     android:paddingEnd="16dp"
                     android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textName" />
+                    app:layout_constraintTop_toBottomOf="@+id/divider" />
 
                 <TextView
                     android:id="@+id/textVisited"

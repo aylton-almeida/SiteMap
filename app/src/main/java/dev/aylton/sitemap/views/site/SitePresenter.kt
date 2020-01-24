@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dev.aylton.sitemap.R
+import dev.aylton.sitemap.models.Rating
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView
@@ -19,7 +20,7 @@ class SitePresenter(view: BaseView) : BasePresenter(view) {
 
     init {
         view.speedDial.visibility = if (site.userId.isEmpty()) View.INVISIBLE else View.VISIBLE
-        view.showSite(site)
+        view.showSiteWithUser(site, fireStore.user)
     }
 
     fun navigateEditSite() {
@@ -47,5 +48,26 @@ class SitePresenter(view: BaseView) : BasePresenter(view) {
 
     fun navigateToNotes(){
         view!!.findNavController().navigate(R.id.action_site_dest_to_notes_dest, bundleOf("site" to site))
+    }
+
+    fun addRating(positive: Boolean) {
+        site.rating.find { it.positive == !positive && it.userId == fireStore.user.id }.let {
+            site.rating.remove(it)
+        }
+        site.rating.add(Rating(positive, fireStore.user.id))
+        fireStore.update(site)
+        view?.showSiteWithUser(site, fireStore.user)
+    }
+
+    fun removeRating(positive: Boolean) {
+        site.rating.remove(site.rating.find { it.userId == fireStore.user.id && it.positive == positive})
+        fireStore.update(site)
+        view?.showSiteWithUser(site, fireStore.user)
+    }
+
+    fun changeFavourite(isFavourite: Boolean){
+        fireStore.setFavourite(site, isFavourite)
+        site.favourite = isFavourite
+        view?.showSiteWithUser(site, fireStore.user)
     }
 }

@@ -5,13 +5,13 @@
             android:icon="@drawable/ic_home"
             android:title="@string/site_lists" />
 
-<!--        <item android:id="@+id/favorites_dest"-->
-<!--            android:icon="@drawable/ic_star"-->
-<!--            android:title="@string/favorites" />-->
+        <item android:id="@+id/favourites_dest"
+            android:icon="@drawable/ic_star"
+            android:title="@string/favourites" />
 
-<!--        <item android:id="@+id/sitesMap_dest"-->
-<!--            android:title="@string/sites_map"-->
-<!--            android:icon="@drawable/ic_map"/>-->
+        <item android:id="@+id/sitesMap_dest"
+            android:title="@string/sites_map"
+            android:icon="@drawable/ic_map"/>
     </group>
 
 </menu>
