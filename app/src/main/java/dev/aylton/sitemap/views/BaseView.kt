@@ -16,8 +16,9 @@ import dev.aylton.sitemap.views.sitelist.TabsAdapter
 import org.jetbrains.anko.AnkoLogger
 
 
-const val IMAGE_REQUEST = 1
-const val LOCATION_REQUEST = 2
+const val LOCAL_IMAGE_REQUEST = 1
+const val CAMERA_IMAGE_REQUEST = 2
+const val LOCATION_REQUEST = 3
 
 abstract class BaseView : Fragment(), AnkoLogger {
     private var basePresenter: BasePresenter? = null
@@ -45,9 +46,7 @@ abstract class BaseView : Fragment(), AnkoLogger {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (data != null) {
-            basePresenter?.doActivityResult(requestCode, resultCode, data)
-        }
+        if (data != null) basePresenter?.doActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroy() {
@@ -71,6 +70,10 @@ abstract class BaseView : Fragment(), AnkoLogger {
 
     fun hideProgress(progressBar: ProgressBar?) {
         progressBar?.visibility = View.INVISIBLE
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        basePresenter?.doRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     open fun showSite(site: SiteModel) {}

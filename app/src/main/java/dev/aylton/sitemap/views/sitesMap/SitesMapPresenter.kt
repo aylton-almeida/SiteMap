@@ -2,7 +2,10 @@ package dev.aylton.sitemap.views.sitesMap
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import dev.aylton.sitemap.models.SiteModel
 import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView

@@ -1,6 +1,5 @@
 package dev.aylton.sitemap.views.editsite
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -63,12 +62,6 @@ class EditSiteView : BaseView() {
             fab.hide()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data != null)
-            presenter.doActivityResult(requestCode, resultCode, data)
-    }
-
     override fun showSite(site: SiteModel) {
         validateForm()
         // Update fields
@@ -84,12 +77,11 @@ class EditSiteView : BaseView() {
                         .load(ContextCompat.getDrawable(context!!, R.drawable.image_placeholder))
                         .centerCrop()
                         .into(imageView)
-                else
-                    Glide
-                        .with(this)
-                        .load(site.images[position])
-                        .centerCrop()
-                        .into(imageView)
+                else Glide
+                    .with(this)
+                    .load(site.images[position])
+                    .centerCrop()
+                    .into(imageView)
             }
 
         carouselView.setImageListener(imageListener)

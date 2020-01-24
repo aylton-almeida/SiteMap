@@ -94,6 +94,13 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
         db.collection("users").document(user.id).set(user)
     }
 
+    fun setFavourite(site: SiteModel, isFavourite: Boolean = true) {
+        if (isFavourite)
+            user.favourites.add(site.id)
+        else user.favourites.remove(site.id)
+        db.collection("users").document(user.id).set(user)
+    }
+
     fun addLoadSitesFunction(callback: () -> Unit, local: String) {
         callback()
         loadSitesFunctions[local] = callback
@@ -145,6 +152,8 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                     user.id = auth.currentUser!!.uid
                 }
                 for (site in publicSites) {
+                    if (user.favourites.any{it == site.id})
+                        site.favourite = true
                     site.visited = false
                     val visitedSite = user.visitedSites.find { it.id == site.id }
                     if (visitedSite != null) {
@@ -153,6 +162,8 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                     }
                 }
                 for (site in privateSites) {
+                    if (user.favourites.any{it == site.id})
+                        site.favourite = true
                     site.visited = false
                     val visitedSite = user.visitedSites.find { it.id == site.id }
                     if (visitedSite != null) {

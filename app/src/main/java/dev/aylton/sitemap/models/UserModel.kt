@@ -10,7 +10,8 @@ data class UserModel(
     var id: String = "",
     var email: String = "",
     var password: String = "",
-    var visitedSites: ArrayList<VisitedSite> = ArrayList()
+    var visitedSites: ArrayList<VisitedSite> = ArrayList(),
+    var favourites: ArrayList<String> = ArrayList()
 ) : Parcelable
 
 @Parcelize

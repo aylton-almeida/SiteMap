@@ -5,7 +5,7 @@ import dev.aylton.sitemap.MainApp
 import dev.aylton.sitemap.services.firebase.SiteFireStore
 import org.jetbrains.anko.AnkoLogger
 
-open class BasePresenter(var view: BaseView?): AnkoLogger {
+open class BasePresenter(var view: BaseView?) : AnkoLogger {
 
     var app: MainApp = view?.activity?.application as MainApp
     var fireStore: SiteFireStore
@@ -23,5 +23,12 @@ open class BasePresenter(var view: BaseView?): AnkoLogger {
     }
 
     open fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    }
+
+    open fun doRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
     }
 }

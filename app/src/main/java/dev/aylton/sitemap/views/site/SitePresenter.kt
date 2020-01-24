@@ -10,7 +10,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dev.aylton.sitemap.R
 import dev.aylton.sitemap.models.Rating
 import dev.aylton.sitemap.models.SiteModel
-import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.views.BasePresenter
 import dev.aylton.sitemap.views.BaseView
 import kotlinx.android.synthetic.main.fragment_site.*
@@ -63,6 +62,12 @@ class SitePresenter(view: BaseView) : BasePresenter(view) {
     fun removeRating(positive: Boolean) {
         site.rating.remove(site.rating.find { it.userId == fireStore.user.id && it.positive == positive})
         fireStore.update(site)
+        view?.showSiteWithUser(site, fireStore.user)
+    }
+
+    fun changeFavourite(isFavourite: Boolean){
+        fireStore.setFavourite(site, isFavourite)
+        site.favourite = isFavourite
         view?.showSiteWithUser(site, fireStore.user)
     }
 }

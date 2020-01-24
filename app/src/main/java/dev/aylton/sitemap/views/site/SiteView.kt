@@ -12,8 +12,6 @@ import dev.aylton.sitemap.models.UserModel
 import dev.aylton.sitemap.views.BaseView
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter
 import kotlinx.android.synthetic.main.fragment_site.*
-import kotlinx.android.synthetic.main.nav_header_main.*
-import org.jetbrains.anko.info
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -85,13 +83,26 @@ class SiteView : BaseView() {
         carouselView.setImageListener(imageListener)
         carouselView.pageCount = site.images.size
 
+        // Favourite
+        if (site.favourite) {
+            imageViewFavourite.setImageDrawable(context?.getDrawable(R.drawable.ic_star))
+            imageViewFavourite.setOnClickListener {
+                presenter.changeFavourite(false)
+            }
+        } else {
+            imageViewFavourite.setImageDrawable(context?.getDrawable(R.drawable.ic_star_outlined))
+            imageViewFavourite.setOnClickListener {
+                presenter.changeFavourite(true)
+            }
+        }
+
         // Rating system
         if (site.rating.any { it.positive && it.userId == user.id }) {
             imageViewThumbsUp.setImageDrawable(context?.getDrawable(R.drawable.ic_thumb_up))
             imageViewThumbsUp.setOnClickListener {
                 presenter.removeRating(true)
             }
-        } else{
+        } else {
             imageViewThumbsUp.setImageDrawable(context?.getDrawable(R.drawable.ic_thumb_up_outlined))
             imageViewThumbsUp.setOnClickListener {
                 presenter.addRating(true)

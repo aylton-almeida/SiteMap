@@ -1,4 +1,4 @@
-package dev.aylton.sitemap.views.sitelist
+package dev.aylton.sitemap.adapters
 
 import android.view.LayoutInflater
 import android.view.View
