@@ -17,14 +17,15 @@ data class SiteModel(
     var userId: String = "",
     var location: Location = Location(),
     var notes: ArrayList<Note> = ArrayList(),
-    var rating: ArrayList<Rating> = ArrayList()
+    var rating: ArrayList<Rating> = ArrayList(),
+    var favourite: Boolean = false
 ) : Parcelable {
-    fun getLikes(): Long{
-        return rating.stream().filter{it.positive}.count()
+    fun getLikes(): Long {
+        return rating.stream().filter { it.positive }.count()
     }
 
-    fun getDislikes(): Long{
-        return rating.stream().filter{!it.positive}.count()
+    fun getDislikes(): Long {
+        return rating.stream().filter { !it.positive }.count()
     }
 }
 

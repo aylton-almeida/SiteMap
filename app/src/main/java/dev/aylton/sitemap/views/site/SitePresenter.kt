@@ -64,4 +64,10 @@ class SitePresenter(view: BaseView) : BasePresenter(view) {
         fireStore.update(site)
         view?.showSiteWithUser(site, fireStore.user)
     }
+
+    fun changeFavourite(isFavourite: Boolean){
+        fireStore.setFavourite(site, isFavourite)
+        site.favourite = isFavourite
+        view?.showSiteWithUser(site, fireStore.user)
+    }
 }

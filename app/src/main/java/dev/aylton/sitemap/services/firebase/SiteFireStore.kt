@@ -152,6 +152,8 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                     user.id = auth.currentUser!!.uid
                 }
                 for (site in publicSites) {
+                    if (user.favourites.any{it == site.id})
+                        site.favourite = true
                     site.visited = false
                     val visitedSite = user.visitedSites.find { it.id == site.id }
                     if (visitedSite != null) {
@@ -160,6 +162,8 @@ class SiteFireStore(val context: Context) : SiteStore, AnkoLogger {
                     }
                 }
                 for (site in privateSites) {
+                    if (user.favourites.any{it == site.id})
+                        site.favourite = true
                     site.visited = false
                     val visitedSite = user.visitedSites.find { it.id == site.id }
                     if (visitedSite != null) {

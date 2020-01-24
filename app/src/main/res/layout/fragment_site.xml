@@ -46,14 +46,26 @@
                     app:layout_constraintTop_toBottomOf="@+id/carouselView" />
 
                 <ImageView
+                    android:id="@+id/imageViewFavourite"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="14dp"
+                    android:contentDescription="@string/icon_favourite"
+                    android:src="@drawable/ic_star_outlined"
+                    android:tint="#ffeb3b"
+                    app:layout_constraintBottom_toBottomOf="@id/textName"
+                    app:layout_constraintStart_toEndOf="@id/textName"
+                    app:layout_constraintTop_toTopOf="@id/textName" />
+
+                <ImageView
                     android:id="@+id/imageViewThumbsUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginEnd="12dp"
                     android:contentDescription="@string/thumbs_up_icon"
-                    android:tint="@color/colorPrimary"
                     android:src="@drawable/ic_thumb_up_outlined"
+                    android:tint="@color/colorPrimary"
                     app:layout_constraintEnd_toStartOf="@id/valueLikes"
                     app:layout_constraintTop_toBottomOf="@id/textName" />
 
@@ -73,8 +85,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"
                     android:contentDescription="@string/thumbs_down_icon"
-                    android:tint="@color/colorAccent"
                     android:src="@drawable/ic_thumb_down_outlined"
+                    android:tint="@color/colorAccent"
                     app:layout_constraintBottom_toBottomOf="@id/imageViewThumbsUp"
                     app:layout_constraintEnd_toStartOf="@id/valueDislikes"
                     app:layout_constraintTop_toTopOf="@id/imageViewThumbsUp" />
@@ -93,8 +105,8 @@
                     android:id="@+id/divider"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="12dp"
+                    android:layout_marginTop="20dp"
                     android:background="@android:color/darker_gray"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/imageViewThumbsUp" />
