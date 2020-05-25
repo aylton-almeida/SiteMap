@@ -1,5 +1,5 @@
 # SiteMap
-Android App for displaying and manage Archaeological Sites 
+Android App for displaying and managing Archaeological Sites 
 
 ## Set up
 
